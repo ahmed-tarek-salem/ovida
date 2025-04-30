@@ -5,16 +5,20 @@ abstract class AppColors {
   static final primary = HexColor('#374151');
   static final secondary = HexColor('#64748B');
 
-  static final LinearGradient primaryGradient = const LinearGradient(
+  static final Color gradientStart = HexColor('#A5B4FC');
+  static final Color gradientEnd = HexColor('#D8B4FE');
+
+  static const LinearGradient primaryGradient = LinearGradient(
     colors: [
-      Color(0xFFA5B4FC),
-      Color(0xFFD8B4FE),
+      Color(0xffA5B4FC),
+      Color(0xffD8B4FE),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
   );
 
   static final onSurface = HexColor('#1C1B1F');
+  static final blueLink = HexColor('#5498EB');
   static final error = HexColor('#EF0000');
   static final lightGrey = HexColor('#ACACAC');
   static final lightRed = HexColor('FEEEEE');

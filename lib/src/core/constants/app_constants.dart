@@ -1,4 +1,6 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class AppConstants {
-  static const double raduis = 8;
-  static const double horizontalPadding = 20;
+  static double primaryRadius = 4.sp;
+  static double horizontalPadding = 20.w;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
@@ -28,7 +29,7 @@ ThemeData createTheme() {
     ),
     appBarTheme: AppBarTheme(
         elevation: 0,
-        toolbarHeight: 48,
+        toolbarHeight: 48.h,
         actionsIconTheme: const IconThemeData(color: Colors.white),
         iconTheme: const IconThemeData(color: Colors.white),
         centerTitle: true,
@@ -56,32 +57,32 @@ ThemeData createTheme() {
       },
     ),
     textTheme: TextTheme(
-      bodyMedium: TextStyle(fontSize: 16, color: AppColors.onSurface),
-      bodySmall: TextStyle(fontSize: 14, color: AppColors.onSurface),
+      bodyMedium: TextStyle(fontSize: 16.sp, color: AppColors.onSurface),
+      bodySmall: TextStyle(fontSize: 14.sp, color: AppColors.onSurface),
     ),
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           fontFamily: FontFamily.readexPro,
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
         backgroundColor: AppColors.primary,
-        minimumSize: const Size(double.infinity, 56),
+        minimumSize: Size(double.infinity, 56.h),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppConstants.raduis),
+          borderRadius: BorderRadius.circular(AppConstants.primaryRadius),
         ),
         elevation: 0,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           fontFamily: FontFamily.readexPro,
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w500,
         ),
         side: BorderSide(
@@ -89,18 +90,18 @@ ThemeData createTheme() {
           width: 1,
         ),
         foregroundColor: AppColors.primary,
-        minimumSize: const Size.fromHeight(56),
+        minimumSize: Size.fromHeight(56.h),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppConstants.raduis),
+          borderRadius: BorderRadius.circular(AppConstants.primaryRadius),
         ),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           fontFamily: FontFamily.readexPro,
-          fontSize: 16,
+          fontSize: 16.sp,
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -109,17 +110,23 @@ ThemeData createTheme() {
     checkboxTheme: CheckboxThemeData(
       side: BorderSide(width: 1, color: HexColor('#575757')),
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       errorMaxLines: 10,
+      hintStyle: TextStyle(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.w400,
+        color: AppColors.lightGrey,
+      ),
       border: GradientOutlineInputBorder(gradient: AppColors.primaryGradient),
       focusedBorder:
           GradientOutlineInputBorder(gradient: AppColors.primaryGradient),
       enabledBorder: GradientOutlineInputBorder(
           gradient: AppColors.primaryGradient,
-          borderRadius: BorderRadius.circular(AppConstants.raduis)),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      labelStyle: const TextStyle(
-        fontSize: 16,
+          borderRadius: BorderRadius.circular(AppConstants.primaryRadius)),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      labelStyle: TextStyle(
+        fontSize: 16.sp,
         fontWeight: FontWeight.w500,
       ),
     ),

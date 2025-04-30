@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovida/src/features/login/presentation/screens/login_screen.dart';
 
 import 'src/core/constants/app_theme.dart';
 
-void main() {
+void main() async {
+  await ScreenUtil.ensureScreenSize();
+
   runApp(const MyApp());
 }
 
@@ -12,11 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'OVIDA',
-      debugShowCheckedModeBanner: false,
-      theme: createTheme(),
-      home: const LoginScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      child: Builder(builder: (context) {
+        return MaterialApp(
+          title: 'OVIDA',
+          debugShowCheckedModeBanner: false,
+          theme: createTheme(),
+          home: const LoginScreen(),
+        );
+      }),
     );
   }
 }

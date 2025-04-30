@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_images.dart';
+import 'package:ovida/src/core/extensions/hardcoded.dart';
+import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -10,83 +12,100 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.horizontalPadding),
+      appBar: AppBar(backgroundColor: Colors.transparent),
+      body: SingleChildScrollView(
+        padding:
+            EdgeInsets.symmetric(horizontal: AppConstants.horizontalPadding),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: Image.asset(
                 AppImages.logo,
-                height: 100,
+                height: 100.h,
               ),
             ),
-            const SizedBox(height: 32),
-
-            // Welcome Text
-            const Text(
-              'Welcome to Ovida',
+            SizedBox(height: 32.h),
+            Text(
+              'Welcome to Ovida'.hardCoded,
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.w700,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8.h),
             Text(
-              'Access your medication reminders and track your progress, and empower your health journey.',
+              'Access your medication reminders and track your progress, and empower your health journey.'
+                  .hardCoded,
               style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 12.sp,
                   color: AppColors.lightGrey,
                   fontWeight: FontWeight.w400),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 32),
-
-            // Phone Number Input
+            SizedBox(height: 32.h),
             TextField(
               decoration: InputDecoration(
-                labelText: 'Phone Number',
-                hintText: 'Enter your phone number',
-                border: GradientOutlineInputBorder(
-                  gradient: AppColors.primaryGradient,
-                  width: 1.0,
-                  gapPadding: 4.0,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
+                hintText: 'Enter your phone number'.hardCoded,
               ),
               keyboardType: TextInputType.phone,
             ),
-            const SizedBox(height: 16),
-
-            // Divider with OR
+            SizedBox(height: 12.h),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter your password'.hardCoded,
+              ),
+              keyboardType: TextInputType.visiblePassword,
+            ),
+            SizedBox(height: 24.h),
+            RaisedRaisedButton(
+              height: 55.h,
+              width: double.infinity,
+              onPressed: () {},
+              child: Text("Login".hardCoded),
+            ),
+            SizedBox(height: 8.h),
             Row(
-              children: const [
-                Expanded(child: Divider()),
+              children: [
+                Spacer(),
+                Text(
+                  "Don’t have an account yet?".hardCoded,
+                  style: TextStyle(
+                      fontSize: 12.sp,
+                      color: AppColors.lightGrey,
+                      fontWeight: FontWeight.w400),
+                ),
+                Text(" Sign up".hardCoded,
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        color: AppColors.blueLink,
+                        fontWeight: FontWeight.w500)),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            Row(
+              children: [
+                Expanded(child: const Divider()),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text('or'),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+                  child: Text('or'.hardCoded),
                 ),
                 Expanded(child: Divider()),
               ],
             ),
-            const SizedBox(height: 16),
-
-            // Google Sign-In Button
+            SizedBox(height: 16.h),
             GestureDetector(
-              onTap: () {}, // Add your Google sign-in logic here
+              onTap: () {},
               child: Image.asset(
                 AppImages.google,
-                height: 70,
+                height: 70.h,
               ),
             ),
-            const SizedBox(height: 16),
-
-            // Terms and Privacy
-            const Text(
-              'By joining, you agree to our Terms of Service and Privacy Policy.',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+            SizedBox(height: 16.h),
+            Text(
+              'By joining, you agree to our Terms of Service and Privacy Policy.'
+                  .hardCoded,
+              style: TextStyle(fontSize: 8.h, color: Colors.grey),
               textAlign: TextAlign.center,
             ),
           ],
