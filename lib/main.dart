@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ovida/src/features/login/presentation/screens/login_screen.dart';
+import 'package:ovida/src/features/auth/presentation/screens/auth_screen.dart';
 
 import 'src/core/constants/app_theme.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           title: 'OVIDA',
           debugShowCheckedModeBanner: false,
           theme: createTheme(),
-          home: const LoginScreen(),
+          home: const AuthScreen(),
         );
       }),
     );
