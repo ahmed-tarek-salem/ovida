@@ -5,6 +5,7 @@ import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_images.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
+import 'package:ovida/src/features/user_info/presentation/screens/user_info_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -80,10 +81,17 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
             ],
             SizedBox(height: 24.h),
-            RaisedRaisedButton(
+            GradientButton(
               height: 55.h,
               width: double.infinity,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserInfoScreen(),
+                  ),
+                );
+              },
               child: Text(signUp ? "Sign up" : "Login".hardCoded),
             ),
             SizedBox(height: 8.h),

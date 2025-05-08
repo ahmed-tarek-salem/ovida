@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 abstract class AppColors {
   static final primary = HexColor('#374151');
   static final secondary = HexColor('#64748B');
+  static final sectionsBackground = HexColor('#E5EAFF');
 
   static final Color gradientStart = HexColor('#A5B4FC');
   static final Color gradientEnd = HexColor('#D8B4FE');

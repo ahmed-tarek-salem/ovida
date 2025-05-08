@@ -56,9 +56,11 @@ ThemeData createTheme() {
         900: AppColors.primary,
       },
     ),
+
     textTheme: TextTheme(
-      bodyMedium: TextStyle(fontSize: 16.sp, color: AppColors.onSurface),
-      bodySmall: TextStyle(fontSize: 14.sp, color: AppColors.onSurface),
+      bodyMedium: TextStyle(fontSize: 16.sp, color: AppColors.primary),
+      bodySmall: TextStyle(fontSize: 14.sp, color: AppColors.primary),
+      bodyLarge: TextStyle(fontSize: 18.sp, color: AppColors.primary),
     ),
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -113,11 +115,7 @@ ThemeData createTheme() {
 
     inputDecorationTheme: InputDecorationTheme(
       errorMaxLines: 10,
-      hintStyle: TextStyle(
-        fontSize: 12.sp,
-        fontWeight: FontWeight.w400,
-        color: AppColors.lightGrey,
-      ),
+      hintStyle: hintStyle,
       border: GradientOutlineInputBorder(gradient: AppColors.primaryGradient),
       focusedBorder:
           GradientOutlineInputBorder(gradient: AppColors.primaryGradient),
@@ -132,6 +130,17 @@ ThemeData createTheme() {
     ),
   );
 }
+
+final hintStyle = TextStyle(
+  fontSize: 12.sp,
+  fontWeight: FontWeight.w400,
+  color: AppColors.lightGrey,
+);
+final choiceStyle = TextStyle(
+  fontSize: 12.sp,
+  fontWeight: FontWeight.w400,
+  color: AppColors.primary,
+);
 
 class FontFamily {
   FontFamily._();

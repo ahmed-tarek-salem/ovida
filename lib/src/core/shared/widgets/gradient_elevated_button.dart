@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 
-class RaisedRaisedButton extends StatelessWidget {
+class GradientButton extends StatelessWidget {
   final Widget child;
   final double? width;
   final double height;
   final VoidCallback onPressed;
   final double? borderRadius;
 
-  const RaisedRaisedButton(
+  const GradientButton(
       {super.key,
       this.width,
       this.height = 50,
@@ -31,6 +31,8 @@ class RaisedRaisedButton extends StatelessWidget {
         child: InkWell(
             hoverColor: Colors.red,
             onTap: onPressed,
+            borderRadius: BorderRadius.circular(
+                borderRadius ?? AppConstants.primaryRadius),
             child: Center(
               child: child,
             )),
