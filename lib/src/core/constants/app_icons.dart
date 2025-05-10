@@ -6,4 +6,7 @@ class AppIcons {
   static const String calendar = '${_path}calendar.svg';
   static const String add = '${_path}add.svg';
   static const String notifications = '${_path}notifications.svg';
+  static const String take = '${_path}take.svg';
+  static const String snooze = '${_path}snooze.svg';
+  static const String skip = '${_path}skip.svg';
 }
