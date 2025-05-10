@@ -8,7 +8,8 @@ import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
-import 'package:ovida/src/features/home/presentation/widgets/dose_tile.dart';
+import 'package:ovida/src/core/shared/widgets/dose_tile.dart';
+import 'package:ovida/src/features/daily_doses/presentation/screens/daily_doses_screen.dart';
 import 'package:ovida/src/features/home/presentation/widgets/gradient_bordered_button_with_icon.dart';
 
 part '../containers/home_header_container.dart';
@@ -34,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
                   _UpcomingDoseContainer(),
                   SizedBox(height: 24.h),
-                  _buildDailyDoses(),
+                  _buildDailyDoses(context),
                   SizedBox(height: 24.h),
                 ],
               ),
@@ -47,7 +48,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDailyDoses() {
+  Widget _buildDailyDoses(BuildContext context) {
     final doses = [
       {'time': '09:00am', 'medicine': 'Paracetamol', 'taken': true},
       {'time': '01:00pm', 'medicine': 'Amoxicillin', 'taken': false},
@@ -103,10 +104,15 @@ class HomeScreen extends StatelessWidget {
             (index) => Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: AppConstants.horizontalPadding),
-              child: DoseTile(
-                time: doses[index]['time'] as String,
-                medicine: doses[index]['medicine'] as String,
-                withOutDivider: index == doses.length - 1,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const DailyDosesScreen();
+                  }));
+                },
+                child: DoseTile(
+                  withOutDivider: index == doses.length - 1,
+                ),
               ),
             ),
           ),

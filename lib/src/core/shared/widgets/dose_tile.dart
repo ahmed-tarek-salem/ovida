@@ -5,14 +5,16 @@ import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
 
 class DoseTile extends StatelessWidget {
-  final String time;
-  final String medicine;
+  // final String time;
+  // final String medicine;
   final bool withOutDivider;
+  final Color? dividerColor;
   const DoseTile(
       {super.key,
-      required this.time,
-      required this.medicine,
-      this.withOutDivider = false});
+      // required this.time,
+      // required this.medicine,
+      this.withOutDivider = false,
+      this.dividerColor = Colors.white});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class DoseTile extends StatelessWidget {
               ),
               SizedBox(width: 18.w),
               Text(
-                medicine,
+                "Paracetamol - 09:00am",
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
@@ -43,7 +45,7 @@ class DoseTile extends StatelessWidget {
             ],
           ),
         ),
-        if (!withOutDivider) Divider(color: Colors.white, height: 28.h),
+        if (!withOutDivider) Divider(color: dividerColor, height: 28.h),
       ],
     );
   }

@@ -18,17 +18,8 @@ abstract class AppColors {
     end: Alignment.bottomRight,
   );
 
-  static final onSurface = HexColor('#1C1B1F');
   static final blueLink = HexColor('#5498EB');
   static final error = HexColor('#EF0000');
-  static final lightGrey = HexColor('#ACACAC');
-  static final lightRed = HexColor('FEEEEE');
-  static const Color green = Color(0xff0EA453);
-  static const Color red = Color(0xffF74848);
-  static final Color backgroundLightRed = HexColor('FFECED');
-  static const Color greyColor = Color(0xff7E7E7E);
-  static const Color lightGreyColor = Color(0xffECECEC);
-  static const Color veryLightColor = Color(0xffF9F9F9);
-  static final Color sucessColor = HexColor('#0EA453');
-  static final Color sucessBackgroundColor = HexColor('#ECF8F2');
+  static final lightGrey = HexColor('#C4C4C4');
+  static final lightBlue = HexColor('#E5EAFF');
 }
