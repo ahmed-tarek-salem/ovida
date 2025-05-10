@@ -31,11 +31,14 @@ ThemeData createTheme() {
         elevation: 0,
         toolbarHeight: 48.h,
         actionsIconTheme: const IconThemeData(color: Colors.white),
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: AppColors.primary),
         centerTitle: true,
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 18),
+        titleTextStyle: TextStyle(
+            color: AppColors.primary,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700),
         surfaceTintColor: AppColors.primary,
-        backgroundColor: AppColors.primary),
+        backgroundColor: Colors.transparent),
     dividerColor: Colors.black.withOpacity(0.05),
     dividerTheme: DividerThemeData(
       color: HexColor('#E6E6E6'),

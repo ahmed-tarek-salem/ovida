@@ -21,5 +21,4 @@ abstract class AppColors {
   static final blueLink = HexColor('#5498EB');
   static final error = HexColor('#EF0000');
   static final lightGrey = HexColor('#C4C4C4');
-  static final lightBlue = HexColor('#E5EAFF');
 }

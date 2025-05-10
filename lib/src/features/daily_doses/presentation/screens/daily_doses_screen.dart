@@ -10,15 +10,7 @@ class DailyDosesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: BackButton(color: AppColors.primary),
-          title: Text('Daily Doses',
-              style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary)),
-          backgroundColor: Colors.transparent,
-        ),
+        appBar: AppBar(title: Text('Daily Doses')),
         body: ListView.builder(
             itemCount: 5,
             padding: EdgeInsets.symmetric(
@@ -43,7 +35,7 @@ class DailyDosesScreen extends StatelessWidget {
                     5,
                     (index) => DoseTile(
                         withOutDivider: false,
-                        dividerColor: AppColors.lightBlue),
+                        dividerColor: AppColors.sectionsBackground),
                   ),
                 ],
               );

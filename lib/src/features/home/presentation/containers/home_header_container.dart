@@ -1,7 +1,7 @@
 part of 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 
 class _HomeHeaderContainer extends StatelessWidget {
-  const _HomeHeaderContainer({super.key});
+  const _HomeHeaderContainer();
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,22 @@ class _HomeHeaderContainer extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const NotificationsScreen();
+            }));
+          },
           icon: SvgPicture.asset(
             AppIcons.notifications,
             height: 32.r,
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const ProfileScreen();
+            }));
+          },
           icon: Container(
             width: 32.r,
             height: 32.r,
