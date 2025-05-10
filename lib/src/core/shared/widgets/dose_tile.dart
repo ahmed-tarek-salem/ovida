@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
+import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
 
 class DoseTile extends StatelessWidget {
@@ -45,7 +46,12 @@ class DoseTile extends StatelessWidget {
             ],
           ),
         ),
-        if (!withOutDivider) Divider(color: dividerColor, height: 28.h),
+        if (!withOutDivider)
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: AppConstants.horizontalPadding * 2),
+            child: Divider(color: dividerColor, height: 28.h),
+          ),
       ],
     );
   }

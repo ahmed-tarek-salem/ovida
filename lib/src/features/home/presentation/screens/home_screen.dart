@@ -7,6 +7,7 @@ import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/shared/widgets/dose_tile.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 import 'package:ovida/src/features/daily_doses/presentation/screens/daily_doses_screen.dart';
+import 'package:ovida/src/features/home/presentation/widgets/drug_info_dialog.dart';
 import 'package:ovida/src/features/home/presentation/widgets/gradient_bordered_button_with_icon.dart';
 import 'package:ovida/src/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:ovida/src/features/profile/presentation/screens/profile_screen.dart';
@@ -48,15 +49,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildDailyDoses(BuildContext context) {
-    final doses = [
-      {'time': '09:00am', 'medicine': 'Paracetamol', 'taken': true},
-      {'time': '01:00pm', 'medicine': 'Amoxicillin', 'taken': false},
-      {'time': '05:00pm', 'medicine': 'Omeprazole', 'taken': true},
-      {'time': '09:00pm', 'medicine': 'Cetirizine', 'taken': true},
-      {'time': '01:00am', 'medicine': 'Metformin', 'taken': false},
-      {'time': '05:00am', 'medicine': 'Lisinopril', 'taken': true},
-    ];
-
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
@@ -77,7 +69,11 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const DailyDosesScreen();
+                  }));
+                },
                 child: Row(
                   children: [
                     Text(
@@ -99,27 +95,23 @@ class HomeScreen extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           ...List.generate(
-            doses.length,
+            10,
             (index) => Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: AppConstants.horizontalPadding),
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const DailyDosesScreen();
-                  }));
+                  showDialog(
+                    context: context,
+                    builder: (context) => DrugInfoDialog(),
+                  );
                 },
                 child: DoseTile(
-                  withOutDivider: index == doses.length - 1,
+                  withOutDivider: index == 9,
                 ),
               ),
             ),
           ),
-          // ...doses.map((dose) => _buildDoseItem(
-          //       time: dose['time'] as String,
-          //       medicine: dose['medicine'] as String,
-          //       taken: dose['taken'] as bool,
-          //     )),
         ],
       ),
     );
