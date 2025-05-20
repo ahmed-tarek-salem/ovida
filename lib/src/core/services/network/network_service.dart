@@ -8,7 +8,7 @@ class NetworkService {
     _init();
   }
   static final baseOptions = BaseOptions(
-    baseUrl: 'https://clusterapp.net/api',
+    baseUrl: 'http://13.53.102.224:3000/api',
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
   );
