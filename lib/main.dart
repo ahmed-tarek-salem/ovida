@@ -20,16 +20,18 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
-      child: MaterialApp(
-        title: 'OVIDA',
-        debugShowCheckedModeBanner: false,
-        theme: createTheme(),
-        home: const AuthScreen(),
-        builder: (context, child) {
-          child = FlutterSmartDialog.init()(context, child);
-          return child;
-        },
-      ),
+      child: Builder(builder: (context) {
+        return MaterialApp(
+          title: 'OVIDA',
+          debugShowCheckedModeBanner: false,
+          theme: createTheme(),
+          home: const AuthScreen(),
+          builder: (context, child) {
+            child = FlutterSmartDialog.init()(context, child);
+            return child;
+          },
+        );
+      }),
     );
   }
 }

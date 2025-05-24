@@ -27,7 +27,7 @@ class PersonalInfoContainer extends StatelessWidget {
         TextFieldWithHeader(
             header: "Full Name".hardCoded,
             textField: FormBuilderTextField(
-                name: "full_name",
+                name: "first_name",
                 decoration: InputDecoration(
                     hintText: "Enter your full name".hardCoded))),
         TextFieldWithHeader(

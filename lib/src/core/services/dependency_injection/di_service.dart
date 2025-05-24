@@ -2,6 +2,9 @@ import 'package:get_it/get_it.dart';
 import 'package:ovida/src/features/auth/data/datasources/auth_remote_datasource/auth_remote_datasource.dart';
 import 'package:ovida/src/features/auth/data/repositories/auth_repository.dart';
 import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
+import 'package:ovida/src/features/user_info/data/datasources/user_info_remote_datasource.dart';
+import 'package:ovida/src/features/user_info/data/repositories/user_info_repo.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_viewmodel.dart';
 
 import '../network/network_service.dart';
 
@@ -23,6 +26,15 @@ class DiService {
     di.registerLazySingleton(() => AuthViewmodel(
           repo: di<AuthRepository>(),
         ));
+
+    di.registerLazySingleton<UserInfoRemoteDatasource>(
+        () => UserInfoRemoteDatasourceImpl(networkService: di()));
+
+    di.registerLazySingleton<UserInfoRepository>(() =>
+        UserInfoRepositoryImpl(datasource: di<UserInfoRemoteDatasource>()));
+
+    di.registerLazySingleton(
+        () => UserInfoViewmodel(repo: di<UserInfoRepository>()));
 
     // di.registerLazySingleton<AppRouter>(() => AppRouter(loginRepo: di()));
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/core/services/network/network_service.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/auth/data/models/sign_up_request.dart';
@@ -30,6 +33,7 @@ class AuthViewmodel extends ChangeNotifier {
       appLogger.d("Sign up response: $response");
       userModel = response.user;
       userModel = userModel!.copyWith(token: response.token);
+      di<NetworkService>().setToken(response.token);
     } on AppError catch (e) {
       error = e;
     } finally {
@@ -56,6 +60,7 @@ class AuthViewmodel extends ChangeNotifier {
       appLogger.d("Login response: $response");
       userModel = response.user;
       userModel = userModel!.copyWith(token: response.token);
+      di<NetworkService>().setToken(response.token);
     } on AppError catch (e) {
       error = e;
     } finally {
