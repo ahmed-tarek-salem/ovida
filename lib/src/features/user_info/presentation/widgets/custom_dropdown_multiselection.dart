@@ -1,8 +1,10 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
+import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 
 class CustomDropdownMultiSelection extends StatefulWidget {
@@ -30,6 +32,15 @@ class _CustomDropdownMultiSelectionState
   Widget build(BuildContext context) {
     return DropdownSearch<String>.multiSelection(
       key: dropDownKey,
+      suffixProps: DropdownSuffixProps(
+        dropdownButtonProps: DropdownButtonProps(
+          iconSize: 24.sp,
+          iconOpened: SvgPicture.asset(AppIcons.arrowUp,
+              height: 16.sp, fit: BoxFit.scaleDown),
+          iconClosed: SvgPicture.asset(AppIcons.arrowDown,
+              height: 16.sp, fit: BoxFit.scaleDown),
+        ),
+      ),
       dropdownBuilder: (context, selectedItems) => SizedBox(
         child: Wrap(
           spacing: 8.sp,
