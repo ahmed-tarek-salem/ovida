@@ -44,7 +44,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             key: viewmodel.formKey,
             child: Column(
               children: [
-                CustomStepper(currentIndex: viewmodel.pageIndex),
+                ListenableBuilder(
+                    listenable: viewmodel,
+                    builder: (context, widget) {
+                      return CustomStepper(currentIndex: viewmodel.pageIndex);
+                    }),
                 SizedBox(height: 24.h),
                 Expanded(
                   child: ListenableBuilder(
