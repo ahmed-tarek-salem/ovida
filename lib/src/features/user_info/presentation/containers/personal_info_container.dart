@@ -7,6 +7,7 @@ import 'package:ovida/src/core/constants/app_theme.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/text_field_with_header.dart';
+import 'package:intl/intl.dart';
 
 class PersonalInfoContainer extends StatelessWidget {
   const PersonalInfoContainer({super.key});
@@ -32,10 +33,16 @@ class PersonalInfoContainer extends StatelessWidget {
                     hintText: "Enter your full name".hardCoded))),
         TextFieldWithHeader(
             header: "Date of Birth",
-            textField: FormBuilderTextField(
-                name: "date_of_birth",
-                decoration: InputDecoration(
-                    hintText: "Select your date of birth".hardCoded))),
+            textField: FormBuilderDateTimePicker(
+              name: "date_of_birth",
+              inputType: InputType.date,
+              format: DateFormat("dd/MM/yyyy"),
+              initialDate: DateTime(2000),
+              lastDate: DateTime.now(),
+              decoration: InputDecoration(
+                  hintText: "Select your date of birth".hardCoded,
+                  suffixIcon: Icon(Icons.calendar_today)),
+            )),
         TextFieldWithHeader(
             header: "Gender",
             textField: FormBuilderDropdown(
@@ -51,7 +58,7 @@ class PersonalInfoContainer extends StatelessWidget {
         TextFieldWithHeader(
             header: "Phone Number",
             textField: FormBuilderTextField(
-              name: 'phone_number',
+              name: 'phoneNumber',
               decoration: InputDecoration(
                   hintText: "Enter your phone number".hardCoded),
               keyboardType: TextInputType.phone,
@@ -59,7 +66,7 @@ class PersonalInfoContainer extends StatelessWidget {
         TextFieldWithHeader(
             header: "Emergency Phone Number",
             textField: FormBuilderTextField(
-              name: 'phone_number',
+              name: 'emergencyContact',
               decoration: InputDecoration(
                   hintText: "Enter your emergency phone number".hardCoded),
               keyboardType: TextInputType.phone,

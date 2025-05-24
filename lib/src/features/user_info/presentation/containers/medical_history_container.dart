@@ -1,18 +1,22 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_theme.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_viewmodel.dart';
+
+import 'package:ovida/src/features/user_info/presentation/widgets/custom_dropdown_multiselection.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/text_field_with_header.dart';
 
 class MedicalHistoryContainer extends StatelessWidget {
   const MedicalHistoryContainer({super.key});
-
   @override
   Widget build(BuildContext context) {
-    var options = ["Option 1", "Option 2", "Option 3"];
+    final viewmodel = di.get<UserInfoViewmodel>();
+
     return ListView(
       children: [
         Text(
@@ -26,61 +30,80 @@ class MedicalHistoryContainer extends StatelessWidget {
         SizedBox(height: 16.h),
         TextFieldWithHeader(
           header: "Chronic Diseases".hardCoded.hardCoded,
-          textField: FormBuilderCheckboxGroup(
-            name: "chronic_diseases",
-            activeColor: AppColors.primary,
-            options: [
-              FormBuilderFieldOption(
-                  value: "0",
-                  child: Text(
-                    "Diabetes",
-                    style: choiceStyle,
-                  )),
-              FormBuilderFieldOption(
-                  value: "1", child: Text("Hypertension", style: choiceStyle)),
-              FormBuilderFieldOption(
-                  value: "2", child: Text("Asthma", style: choiceStyle)),
-              FormBuilderFieldOption(
-                  value: "3", child: Text("Heart Disease", style: choiceStyle)),
-            ],
+          textField: FormBuilderField<List<String>>(
+            name: 'chronicDiseases',
+            builder: (FormFieldState<List<String>> field) {
+              return CustomDropdownMultiSelection(
+                initialSelectedItems: field.value ?? ["Menu", "Dialog"],
+                items: ["Menu", "Dialog", "Modal", "BottomSheet"],
+                searchHintText: 'Select chronic diseases'.hardCoded,
+                onChanged: (selectedItems) {
+                  field.didChange(selectedItems);
+                  print(viewmodel
+                      .formKey.currentState?.fields['chronicDiseases']?.value);
+                },
+              );
+            },
           ),
         ),
         TextFieldWithHeader(
           header: "Allergies".hardCoded.hardCoded,
-          textField: FormBuilderCheckboxGroup(
-            name: "allergies",
-            activeColor: AppColors.primary,
-            options: [
-              FormBuilderFieldOption(
-                  value: "0",
-                  child: Text(
-                    "Allergy 1",
-                    style: choiceStyle,
-                  )),
-              FormBuilderFieldOption(
-                  value: "1", child: Text("Allergy 2", style: choiceStyle)),
-              FormBuilderFieldOption(
-                  value: "2", child: Text("Allergy 3", style: choiceStyle)),
-              FormBuilderFieldOption(
-                  value: "3", child: Text("Allergy 4", style: choiceStyle)),
-            ],
-          ),
+          textField: FormBuilderField<List<String>>(
+              name: 'allergies',
+              builder: (FormFieldState<List<String>> field) {
+                return CustomDropdownMultiSelection(
+                  initialSelectedItems: ["Aspirin", "Penicillin"],
+                  items: ["Aspirin", "Penicillin", "Peanuts", "Shellfish"],
+                  searchHintText: 'Select allergies'.hardCoded,
+                  onChanged: (selectedItems) {
+                    field.didChange(selectedItems);
+                    print(viewmodel.formKey.currentState
+                        ?.fields['chronicDiseases']?.value);
+                  },
+                );
+              }),
         ),
         TextFieldWithHeader(
           header: "Previous Surgeries".hardCoded,
-          textField: FormBuilderTextField(
-            name: "previous_surgeries",
-            decoration: InputDecoration(
-                hintText: "Enter your previous surgeries".hardCoded),
-          ),
+          textField: FormBuilderField<List<String>>(
+              name: 'previousSurgeries',
+              builder: (FormFieldState<List<String>> field) {
+                return CustomDropdownMultiSelection(
+                  initialSelectedItems: ["Appendectomy"],
+                  items: [
+                    "Appendectomy",
+                    "Gallbladder Removal",
+                    "Knee Surgery",
+                    "Heart Bypass"
+                  ],
+                  searchHintText: 'Select surgeries'.hardCoded,
+                  onChanged: (selectedItems) {
+                    field.didChange(selectedItems);
+                    print("Selected items: $selectedItems");
+                  },
+                );
+              }),
         ),
         TextFieldWithHeader(
           header: "Family Medical History".hardCoded,
-          textField: FormBuilderTextField(
-            name: "family_medical_history",
-            decoration: InputDecoration(
-                hintText: "Add Family Medical History".hardCoded),
-          ),
+          textField: FormBuilderField<List<String>>(
+              name: 'familyMedicalHistory',
+              builder: (FormFieldState<List<String>> field) {
+                return CustomDropdownMultiSelection(
+                  initialSelectedItems: ["Diabetes"],
+                  items: [
+                    "Diabetes",
+                    "Heart Disease",
+                    "Cancer",
+                    "Hypertension"
+                  ],
+                  searchHintText: 'Select medical history'.hardCoded,
+                  onChanged: (selectedItems) {
+                    field.didChange(selectedItems);
+                    print("Selected items: $selectedItems");
+                  },
+                );
+              }),
         ),
       ],
     );
