@@ -6,6 +6,8 @@ import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/constants/app_theme.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/text_field_with_header.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +16,9 @@ class PersonalInfoContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewmodel = di.get<UserInfoViewmodel>();
+    final user = viewmodel.userInfo?.user;
+    final userInfo = viewmodel.userInfo;
     return ListView(
       children: [
         Text(
@@ -29,6 +34,7 @@ class PersonalInfoContainer extends StatelessWidget {
             header: "Full Name".hardCoded,
             textField: FormBuilderTextField(
                 name: "first_name",
+                initialValue: userInfo?.user.firstName,
                 decoration: InputDecoration(
                     hintText: "Enter your full name".hardCoded))),
         TextFieldWithHeader(
@@ -48,17 +54,19 @@ class PersonalInfoContainer extends StatelessWidget {
             textField: FormBuilderDropdown(
                 name: "gender",
                 hint: Text("Select your gender".hardCoded, style: hintStyle),
+                initialValue: user?.gender,
                 icon: SvgPicture.asset(
                   AppIcons.arrowDown,
                 ),
                 items: [
-                  DropdownMenuItem(value: "0", child: Text("Male")),
-                  DropdownMenuItem(value: "1", child: Text("Female")),
+                  DropdownMenuItem(value: "male", child: Text("Male")),
+                  DropdownMenuItem(value: "female", child: Text("Female")),
                 ])),
         TextFieldWithHeader(
             header: "Phone Number",
             textField: FormBuilderTextField(
               name: 'phoneNumber',
+              initialValue: user?.phoneNumber,
               decoration: InputDecoration(
                   hintText: "Enter your phone number".hardCoded),
               keyboardType: TextInputType.phone,
@@ -66,6 +74,7 @@ class PersonalInfoContainer extends StatelessWidget {
         TextFieldWithHeader(
             header: "Emergency Phone Number",
             textField: FormBuilderTextField(
+              initialValue: user?.emergencyContact?.phoneNumber,
               name: 'emergencyContact',
               decoration: InputDecoration(
                   hintText: "Enter your emergency phone number".hardCoded),

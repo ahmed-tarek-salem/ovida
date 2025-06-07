@@ -4,7 +4,7 @@ import 'package:ovida/src/features/auth/data/repositories/auth_repository.dart';
 import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:ovida/src/features/user_info/data/datasources/user_info_remote_datasource.dart';
 import 'package:ovida/src/features/user_info/data/repositories/user_info_repo.dart';
-import 'package:ovida/src/features/user_info/presentation/viewmodel/user_viewmodel.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 
 import '../network/network_service.dart';
 

@@ -6,7 +6,10 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
+import 'package:ovida/src/features/user_info/presentation/widgets/medications_dropdown.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/text_field_with_header.dart';
 
 class CurrentMedicationsContainer extends StatelessWidget {
@@ -14,23 +17,26 @@ class CurrentMedicationsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewmodel = di.get<UserInfoViewmodel>();
+
     return ListView(
       children: [
         Text(
           'Add your current medications'.hardCoded,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w700, color: Colors.blue),
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primary),
         ),
         SizedBox(height: 16),
         TextFieldWithHeader(
           header: "Current Medications".hardCoded,
-          textField: FormBuilderTextField(
-            name: "current_medications",
-            decoration: InputDecoration(
-              hintText: "Enter your current medications".hardCoded,
-              border: OutlineInputBorder(),
-            ),
+          textField: MedicationsDropdown(
+            items: viewmodel.medications ?? [],
+            onChanged: (selectedItems) {
+              viewmodel.userInfo?.currentMedications;
+            },
           ),
         ),
         Row(

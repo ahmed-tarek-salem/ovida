@@ -11,7 +11,7 @@ import 'package:ovida/src/core/shared/widgets/custom_progress_indicator.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
-import 'package:ovida/src/features/user_info/presentation/viewmodel/user_viewmodel.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/stepper.dart';
 
 class UserInfoScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   @override
   void initState() {
-    viewmodel.getUserInfo();
+    viewmodel.getData();
     super.initState();
   }
 

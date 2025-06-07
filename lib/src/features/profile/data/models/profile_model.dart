@@ -1,11 +1,11 @@
-class UserInfoResponse {
+class ProfileModel {
   final User user;
   final List<CurrentMedication> currentMedications;
   final List<LaboratoryReport> laboratoryReports;
   final List<MedicalVisit> medicalVisits;
   final List<VitalSign> vitalSigns;
 
-  UserInfoResponse({
+  ProfileModel({
     required this.user,
     required this.currentMedications,
     required this.laboratoryReports,
@@ -13,8 +13,7 @@ class UserInfoResponse {
     required this.vitalSigns,
   });
 
-  factory UserInfoResponse.fromJson(Map<String, dynamic> json) =>
-      UserInfoResponse(
+  factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
         user: User.fromJson(json["user"]),
         currentMedications: List<CurrentMedication>.from(
             json["currentMedications"]

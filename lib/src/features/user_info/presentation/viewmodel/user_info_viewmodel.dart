@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
+import 'package:ovida/src/features/profile/data/models/dropdown_menus_model.dart';
+import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
 import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
 import 'package:ovida/src/features/user_info/data/repositories/user_info_repo.dart';
 import 'package:ovida/src/features/user_info/presentation/containers/current_medications_container.dart';
@@ -15,6 +17,8 @@ class UserInfoViewmodel extends ChangeNotifier {
   UserInfoViewmodel({required UserInfoRepository repo}) : _repo = repo;
   int pageIndex = 0;
   UserInfoResponse? userInfo;
+  DropdownMenusModel? dropdownMenus;
+  List<MedicationModel>? medications;
   bool isLoading = false;
   AppError? error;
   final formKey = GlobalKey<FormBuilderState>();
@@ -34,12 +38,29 @@ class UserInfoViewmodel extends ChangeNotifier {
   ];
 
   Future<void> getUserInfo() async {
-    isLoading = true;
-    error = null;
-    notifyListeners();
+    final response = await _repo.getUserInfo();
+    userInfo = response;
+  }
+
+  Future<void> getDropdownMenus() async {
+    final response = await _repo.getDropdownData();
+    dropdownMenus = response;
+  }
+
+  Future<void> getMedications() async {
+    final response = await _repo.getMedications();
+    medications = response;
+  }
+
+  Future<void> getData() async {
     try {
-      final response = await _repo.getUserInfo();
-      userInfo = response;
+      isLoading = true;
+      error = null;
+      await Future.wait([
+        getUserInfo(),
+        getDropdownMenus(),
+        getMedications(),
+      ]);
     } on AppError catch (e) {
       error = e;
     } finally {

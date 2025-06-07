@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
-import 'package:ovida/src/core/constants/app_theme.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
-import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
-import 'package:ovida/src/features/user_info/presentation/viewmodel/user_viewmodel.dart';
-
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/custom_dropdown_multiselection.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/text_field_with_header.dart';
 

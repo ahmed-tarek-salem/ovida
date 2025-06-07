@@ -59,7 +59,6 @@ class AuthViewmodel extends ChangeNotifier {
       );
       appLogger.d("Login response: $response");
       userModel = response.user;
-      userModel = userModel!.copyWith(token: response.token);
       di<NetworkService>().setToken(response.token);
     } on AppError catch (e) {
       error = e;
