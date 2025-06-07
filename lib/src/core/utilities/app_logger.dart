@@ -17,18 +17,29 @@ import 'package:logger/logger.dart';
 /// appLogger.w('This is a warning message.');
 /// appLogger.e('This is an error message.');
 ///
-final appLogger = Logger(
-  printer: CustomPrinter(),
-  filter: null,
-  output: null,
-);
+// final appLogger = Logger(
+//   printer: CustomPrinter(),
+//   filter: null,
+//   output: null,
+// );
 
-class CustomPrinter extends LogPrinter {
-  @override
-  List<String> log(LogEvent event) {
-    final colors = PrettyPrinter.defaultLevelColors[event.level];
-    final emoji = PrettyPrinter.defaultLevelEmojis[event.level];
-    final message = event.message;
-    return [colors!('$emoji: $message')];
-  }
-}
+// class CustomPrinter extends LogPrinter {
+//   @override
+//   List<String> log(LogEvent event) {
+//     final colors = PrettyPrinter.defaultLevelColors[event.level];
+//     final emoji = PrettyPrinter.defaultLevelEmojis[event.level];
+//     final message = event.message;
+//     final place = event.stackTrace?.toString();
+//     if (place != null) {
+//       return [colors!('$emoji: $message\n$place')];
+//     }
+//     return [colors!('$emoji: $message')];
+//   }
+// }
+
+var appLogger = Logger(
+  filter: null,
+  printer: PrettyPrinter(),
+  output: null,
+  level: Level.debug,
+);

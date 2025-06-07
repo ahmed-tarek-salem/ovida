@@ -37,6 +37,22 @@ class UserInfoResponse {
             List<dynamic>.from(medicalVisits.map((x) => x.toJson())),
         "vitalSigns": List<dynamic>.from(vitalSigns.map((x) => x.toJson())),
       };
+
+  UserInfoResponse copyWith({
+    User? user,
+    List<CurrentMedication>? currentMedications,
+    List<LaboratoryReport>? laboratoryReports,
+    List<MedicalVisit>? medicalVisits,
+    List<VitalSign>? vitalSigns,
+  }) {
+    return UserInfoResponse(
+      user: user ?? this.user,
+      currentMedications: currentMedications ?? this.currentMedications,
+      laboratoryReports: laboratoryReports ?? this.laboratoryReports,
+      medicalVisits: medicalVisits ?? this.medicalVisits,
+      vitalSigns: vitalSigns ?? this.vitalSigns,
+    );
+  }
 }
 
 class CurrentMedication {
@@ -59,9 +75,9 @@ class CurrentMedication {
     required this.startDate,
     required this.endDate,
     required this.prescribingDoctor,
-    required this.user,
-    required this.isActive,
-    required this.v,
+    this.user,
+    this.isActive,
+    this.v,
   });
 
   factory CurrentMedication.fromJson(Map<String, dynamic> json) =>
@@ -98,18 +114,18 @@ class CurrentMedication {
 class LaboratoryReport {
   final String? id;
   final String? testType;
-  final DateTime testDate;
+  final DateTime? testDate;
   final String? resultsSummary;
   final String? user;
   final int? v;
 
   LaboratoryReport({
-    required this.id,
+    this.id,
     required this.testType,
     required this.testDate,
     required this.resultsSummary,
-    required this.user,
-    required this.v,
+    this.user,
+    this.v,
   });
 
   factory LaboratoryReport.fromJson(Map<String, dynamic> json) =>
@@ -123,12 +139,9 @@ class LaboratoryReport {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "testType": testType,
-        "testDate": testDate.toIso8601String(),
+        "testDate": testDate?.toIso8601String(),
         "resultsSummary": resultsSummary,
-        "user": user,
-        "__v": v,
       };
 }
 
@@ -145,12 +158,12 @@ class MedicalVisit {
   MedicalVisit({
     required this.healthcareProvider,
     required this.treatmentPlan,
-    required this.id,
     required this.subject,
     required this.dateOfVisit,
     required this.diagnosis,
-    required this.user,
-    required this.v,
+    this.id,
+    this.user,
+    this.v,
   });
 
   factory MedicalVisit.fromJson(Map<String, dynamic> json) => MedicalVisit(
@@ -173,12 +186,9 @@ class MedicalVisit {
   Map<String, dynamic> toJson() => {
         "healthcareProvider": healthcareProvider?.toJson(),
         "treatmentPlan": treatmentPlan?.toJson(),
-        "_id": id,
         "subject": subject,
         "dateOfVisit": dateOfVisit?.toIso8601String(),
         "diagnosis": diagnosis,
-        "user": user,
-        "__v": v,
       };
 }
 
@@ -188,7 +198,7 @@ class HealthcareProvider {
 
   HealthcareProvider({
     required this.name,
-    required this.specialization,
+    this.specialization,
   });
 
   factory HealthcareProvider.fromJson(Map<String, dynamic> json) =>
@@ -199,31 +209,31 @@ class HealthcareProvider {
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "specialization": specialization,
+        //"specialization": specialization,
       };
 }
 
 class TreatmentPlan {
   final String description;
-  final String duration;
-  final DateTime followUpDate;
+  // final String duration;
+  // final DateTime followUpDate;
 
   TreatmentPlan({
     required this.description,
-    required this.duration,
-    required this.followUpDate,
+    // required this.duration,
+    // required this.followUpDate,
   });
 
   factory TreatmentPlan.fromJson(Map<String, dynamic> json) => TreatmentPlan(
         description: json["description"],
-        duration: json["duration"],
-        followUpDate: DateTime.parse(json["followUpDate"]),
+        // duration: json["duration"],
+        // followUpDate: DateTime.parse(json["followUpDate"]),
       );
 
   Map<String, dynamic> toJson() => {
         "description": description,
-        "duration": duration,
-        "followUpDate": followUpDate.toIso8601String(),
+        // "duration": duration,
+        // "followUpDate": followUpDate.toIso8601String(),
       };
 }
 

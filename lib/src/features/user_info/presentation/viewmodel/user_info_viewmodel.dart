@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
+import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
+import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/profile/data/models/dropdown_menus_model.dart';
 import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
 import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
@@ -67,5 +72,50 @@ class UserInfoViewmodel extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void addMedication(CurrentMedication medication) async {
+    if (!userInfo!.currentMedications.contains(medication)) {
+      userInfo?.currentMedications.add(medication);
+      notifyListeners();
+    } else {
+      LoadingOverlay.showErrorMessage(
+          "Already added, please remove it first".hardCoded);
+    }
+  }
+
+  void removeMedication(CurrentMedication medication) {
+    userInfo?.currentMedications.remove(medication);
+    notifyListeners();
+  }
+
+  void addMedicalVisit(MedicalVisit visit) {
+    if (!userInfo!.medicalVisits.contains(visit)) {
+      userInfo?.medicalVisits.add(visit);
+      notifyListeners();
+    } else {
+      LoadingOverlay.showErrorMessage(
+          "Already added, please remove it first".hardCoded);
+    }
+  }
+
+  void removeMedicalVisit(MedicalVisit visit) {
+    userInfo?.medicalVisits.remove(visit);
+    notifyListeners();
+  }
+
+  void addLabReport(LaboratoryReport report) {
+    if (!userInfo!.laboratoryReports.contains(report)) {
+      userInfo?.laboratoryReports.add(report);
+      notifyListeners();
+    } else {
+      LoadingOverlay.showErrorMessage(
+          "Already added, please remove it first".hardCoded);
+    }
+  }
+
+  void removeLabReport(LaboratoryReport report) {
+    userInfo?.laboratoryReports.remove(report);
+    notifyListeners();
   }
 }

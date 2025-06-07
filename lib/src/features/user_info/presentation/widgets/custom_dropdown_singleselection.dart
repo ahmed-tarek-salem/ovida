@@ -4,25 +4,30 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
-import 'package:ovida/src/core/extensions/hardcoded.dart';
-import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
 
-class MedicationsDropdown extends StatefulWidget {
-  final List<MedicationModel> items;
-  final Function(MedicationModel selectedItem) onChanged;
-  const MedicationsDropdown(
-      {super.key, required this.items, required this.onChanged});
+class CustomDropdownSingleSelection extends StatefulWidget {
+  final List<String> items;
+  final Function(String selectedItem) onChanged;
+  final String? searchHintText;
+  const CustomDropdownSingleSelection({
+    super.key,
+    required this.items,
+    required this.onChanged,
+    this.searchHintText,
+  });
 
   @override
-  State<MedicationsDropdown> createState() => _MedicationsDropdownState();
+  State<CustomDropdownSingleSelection> createState() =>
+      _CustomDropdownSingleSelectionState();
 }
 
-class _MedicationsDropdownState extends State<MedicationsDropdown> {
-  final dropDownKey = GlobalKey<DropdownSearchState<MedicationModel>>();
+class _CustomDropdownSingleSelectionState
+    extends State<CustomDropdownSingleSelection> {
+  final dropDownKey = GlobalKey<DropdownSearchState>();
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearch<MedicationModel>(
+    return DropdownSearch<String>(
       key: dropDownKey,
       items: (filter, search) {
         return widget.items;
@@ -32,14 +37,14 @@ class _MedicationsDropdownState extends State<MedicationsDropdown> {
           widget.onChanged(selectedItem);
         }
       },
-      compareFn: (item1, item2) => item1.brandName == item2.brandName,
+      compareFn: (item1, item2) => item1 == item2,
       popupProps: PopupProps.dialog(
         showSelectedItems: true,
         itemBuilder: (context, item, isSelected, isSKL) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
             child: Text(
-              item.brandName ?? "",
+              item,
               style: TextStyle(
                 color: AppColors.primary,
                 fontSize: 14.sp,
@@ -51,7 +56,7 @@ class _MedicationsDropdownState extends State<MedicationsDropdown> {
         showSearchBox: true,
         searchFieldProps: TextFieldProps(
           decoration: InputDecoration(
-            hintText: "Search medication".hardCoded,
+            hintText: widget.searchHintText,
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
@@ -70,13 +75,15 @@ class _MedicationsDropdownState extends State<MedicationsDropdown> {
         ),
       ),
       dropdownBuilder: (context, selectedItem) => SizedBox(
-        child: Text(selectedItem?.brandName ?? '',
-            style: TextStyle(color: AppColors.gradientStart, fontSize: 12.sp)),
+        child: Text(
+          selectedItem ?? "",
+          style: TextStyle(color: AppColors.gradientStart, fontSize: 12.sp),
+        ),
       ),
-      itemAsString: (item) => item.brandName ?? '',
+      itemAsString: (item) => item,
       decoratorProps: DropDownDecoratorProps(
         decoration: InputDecoration(
-          hintText: "Select medication".hardCoded,
+          hintText: widget.searchHintText,
           border: OutlineInputBorder(),
         ),
       ),
