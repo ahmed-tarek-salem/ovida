@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
@@ -117,5 +115,15 @@ class UserInfoViewmodel extends ChangeNotifier {
   void removeLabReport(LaboratoryReport report) {
     userInfo?.laboratoryReports.remove(report);
     notifyListeners();
+  }
+
+  submitForm() {
+    if (formKey.currentState?.saveAndValidate() ?? false) {
+      final formData = formKey.currentState?.value;
+      appLogger.d("Form Data: $formData");
+      // Handle form submission logic here
+    } else {
+      appLogger.e("Form validation failed");
+    }
   }
 }

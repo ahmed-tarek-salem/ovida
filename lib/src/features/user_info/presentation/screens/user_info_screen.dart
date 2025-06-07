@@ -10,7 +10,6 @@ import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/shared/widgets/custom_progress_indicator.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
-import 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/stepper.dart';
 
@@ -70,54 +69,61 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         );
                       }),
                 ),
-                Row(
-                  children: [
-                    if (viewmodel.pageIndex != 0)
-                      InkWell(
-                        onTap: () {
-                          viewmodel.updatePageIndex(viewmodel.pageIndex - 1);
-                        },
-                        borderRadius: BorderRadius.circular(50.sp),
-                        child: Container(
-                          width: 50.sp,
-                          height: 50.sp,
-                          decoration: BoxDecoration(
-                              border: GradientBoxBorder(
-                                gradient: AppColors.primaryGradient,
-                                width: 2.sp,
+                ListenableBuilder(
+                    listenable: viewmodel,
+                    builder: (context, widget) {
+                      return Row(
+                        children: [
+                          if (viewmodel.pageIndex != 0)
+                            InkWell(
+                              onTap: () {
+                                viewmodel
+                                    .updatePageIndex(viewmodel.pageIndex - 1);
+                              },
+                              borderRadius: BorderRadius.circular(50.sp),
+                              child: Container(
+                                width: 50.sp,
+                                height: 50.sp,
+                                decoration: BoxDecoration(
+                                    border: GradientBoxBorder(
+                                      gradient: AppColors.primaryGradient,
+                                      width: 2.sp,
+                                    ),
+                                    borderRadius: BorderRadius.circular(50.sp)),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AppIcons.arrowBack,
+                                    height: 20.h,
+                                  ),
+                                ),
                               ),
-                              borderRadius: BorderRadius.circular(50.sp)),
-                          child: Center(
+                            ),
+                          Spacer(),
+                          GradientButton(
+                            height: 50.sp,
+                            width: 50.sp,
+                            borderRadius: 50.sp,
+                            onPressed: () {
+                              if (viewmodel.pageIndex <= 4) {
+                                viewmodel
+                                    .updatePageIndex(viewmodel.pageIndex + 1);
+                              } else {
+                                viewmodel.submitForm();
+                                // Navigator.push(context,
+                                //     MaterialPageRoute(builder: (context) {
+                                //   return const HomeScreen();
+                                // }));
+                              }
+                            },
                             child: SvgPicture.asset(
-                              AppIcons.arrowBack,
+                              AppIcons.arrowForward,
                               height: 20.h,
+                              color: Colors.white,
                             ),
                           ),
-                        ),
-                      ),
-                    Spacer(),
-                    GradientButton(
-                      height: 50.sp,
-                      width: 50.sp,
-                      borderRadius: 50.sp,
-                      onPressed: () {
-                        if (viewmodel.pageIndex <= 4) {
-                          viewmodel.updatePageIndex(viewmodel.pageIndex + 1);
-                        } else {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return const HomeScreen();
-                          }));
-                        }
-                      },
-                      child: SvgPicture.asset(
-                        AppIcons.arrowForward,
-                        height: 20.h,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+                        ],
+                      );
+                    }),
               ],
             ),
           ),

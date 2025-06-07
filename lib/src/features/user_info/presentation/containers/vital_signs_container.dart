@@ -23,12 +23,36 @@ class VitalSignsContainer extends StatelessWidget {
         SizedBox(height: 16.h),
         TextFieldWithHeader(
           header: "Blood Pressure".hardCoded,
-          textField: FormBuilderTextField(
-            name: "vital_signs",
-            decoration: InputDecoration(
-              hintText: "120/80 mmHg",
-              border: OutlineInputBorder(),
-            ),
+          textField: Row(
+            children: [
+              Expanded(
+                child: FormBuilderTextField(
+                  name: "systolic_pressure",
+                  decoration: InputDecoration(
+                    hintText: "120",
+                    border: OutlineInputBorder(),
+                    suffixText: "mmHg",
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Text("/",
+                  style:
+                      TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold)),
+              SizedBox(width: 8.w),
+              Expanded(
+                child: FormBuilderTextField(
+                  name: "diastolic_pressure",
+                  decoration: InputDecoration(
+                    hintText: "80",
+                    border: OutlineInputBorder(),
+                    suffixText: "mmHg",
+                  ),
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
           ),
         ),
         TextFieldWithHeader(
@@ -36,9 +60,15 @@ class VitalSignsContainer extends StatelessWidget {
           textField: FormBuilderTextField(
             name: "heart_rate",
             decoration: InputDecoration(
-              hintText: "60  bpm",
+              hintText: "60",
               border: OutlineInputBorder(),
+              suffixText: "bpm",
+              suffixStyle: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary,
+              ),
             ),
+            keyboardType: TextInputType.number,
           ),
         ),
         TextFieldWithHeader(
@@ -46,9 +76,15 @@ class VitalSignsContainer extends StatelessWidget {
           textField: FormBuilderTextField(
             name: "blood_glucose",
             decoration: InputDecoration(
-              hintText: "100 mg/dL",
+              hintText: "100",
               border: OutlineInputBorder(),
+              suffixText: "mg/dL",
+              suffixStyle: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: AppColors.primary,
+              ),
             ),
+            keyboardType: TextInputType.number,
           ),
         ),
       ],
