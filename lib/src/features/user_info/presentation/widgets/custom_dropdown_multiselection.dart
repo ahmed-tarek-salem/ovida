@@ -72,6 +72,7 @@ class _CustomDropdownMultiSelectionState
       decoratorProps: DropDownDecoratorProps(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
+          hintText: widget.searchHintText,
         ),
       ),
       popupProps: PopupPropsMultiSelection<String>.menu(

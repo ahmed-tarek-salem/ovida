@@ -98,16 +98,12 @@ class CurrentMedication {
       );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "medication": medication,
+        "medication": id,
         "dosage": dosage,
         "frequency": frequency,
         "startDate": startDate?.toIso8601String(),
         "endDate": endDate?.toIso8601String(),
         "prescribingDoctor": prescribingDoctor,
-        "user": user,
-        "isActive": isActive,
-        "__v": v,
       };
 }
 
@@ -392,11 +388,11 @@ class VitalSign {
 
   VitalSign({
     required this.bloodPressure,
-    required this.id,
+    this.id,
     required this.heartRate,
     required this.bloodGlucoseLevel,
-    required this.user,
-    required this.v,
+    this.user,
+    this.v,
   });
 
   factory VitalSign.fromJson(Map<String, dynamic> json) => VitalSign(
@@ -412,11 +408,8 @@ class VitalSign {
 
   Map<String, dynamic> toJson() => {
         "bloodPressure": bloodPressure?.toJson(),
-        "_id": id,
         "heartRate": heartRate,
         "bloodGlucoseLevel": bloodGlucoseLevel,
-        "user": user,
-        "__v": v,
       };
 }
 

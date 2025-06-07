@@ -31,8 +31,9 @@ class MedicalHistoryContainer extends StatelessWidget {
             name: 'chronicDiseases',
             builder: (FormFieldState<List<String>> field) {
               return CustomDropdownMultiSelection(
-                initialSelectedItems: field.value ?? ["Menu", "Dialog"],
-                items: ["Menu", "Dialog", "Modal", "BottomSheet"],
+                initialSelectedItems:
+                    viewmodel.userInfo?.user.chronicDiseases ?? [],
+                items: viewmodel.dropdownMenus?.data.chronicDiseases ?? [],
                 searchHintText: 'Select chronic diseases'.hardCoded,
                 onChanged: (selectedItems) {
                   field.didChange(selectedItems);
@@ -49,8 +50,9 @@ class MedicalHistoryContainer extends StatelessWidget {
               name: 'allergies',
               builder: (FormFieldState<List<String>> field) {
                 return CustomDropdownMultiSelection(
-                  initialSelectedItems: ["Aspirin", "Penicillin"],
-                  items: ["Aspirin", "Penicillin", "Peanuts", "Shellfish"],
+                  initialSelectedItems:
+                      viewmodel.userInfo?.user.allergies ?? [],
+                  items: viewmodel.dropdownMenus?.data.foodAllergies ?? [],
                   searchHintText: 'Select allergies'.hardCoded,
                   onChanged: (selectedItems) {
                     field.didChange(selectedItems);
@@ -66,13 +68,9 @@ class MedicalHistoryContainer extends StatelessWidget {
               name: 'previousSurgeries',
               builder: (FormFieldState<List<String>> field) {
                 return CustomDropdownMultiSelection(
-                  initialSelectedItems: ["Appendectomy"],
-                  items: [
-                    "Appendectomy",
-                    "Gallbladder Removal",
-                    "Knee Surgery",
-                    "Heart Bypass"
-                  ],
+                  initialSelectedItems:
+                      viewmodel.userInfo?.user.previousSurgeries ?? [],
+                  items: viewmodel.dropdownMenus?.data.previousSurgeries ?? [],
                   searchHintText: 'Select surgeries'.hardCoded,
                   onChanged: (selectedItems) {
                     field.didChange(selectedItems);
@@ -87,13 +85,11 @@ class MedicalHistoryContainer extends StatelessWidget {
               name: 'familyMedicalHistory',
               builder: (FormFieldState<List<String>> field) {
                 return CustomDropdownMultiSelection(
-                  initialSelectedItems: ["Diabetes"],
-                  items: [
-                    "Diabetes",
-                    "Heart Disease",
-                    "Cancer",
-                    "Hypertension"
-                  ],
+                  initialSelectedItems:
+                      viewmodel.userInfo?.user.familyMedicalHistory ?? [],
+                  items:
+                      viewmodel.dropdownMenus?.data.familyMedicalConditions ??
+                          [],
                   searchHintText: 'Select medical history'.hardCoded,
                   onChanged: (selectedItems) {
                     field.didChange(selectedItems);

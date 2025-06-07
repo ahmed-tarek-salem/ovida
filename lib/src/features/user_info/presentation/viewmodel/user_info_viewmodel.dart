@@ -117,6 +117,16 @@ class UserInfoViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addVitalSign(VitalSign vitalSign) {
+    userInfo?.vitalSigns.add(vitalSign);
+    notifyListeners();
+  }
+
+  void removeVitalSign(VitalSign vitalSign) {
+    userInfo?.vitalSigns.remove(vitalSign);
+    notifyListeners();
+  }
+
   submitForm() {
     if (formKey.currentState?.saveAndValidate() ?? false) {
       final formData = formKey.currentState?.value;
@@ -125,5 +135,54 @@ class UserInfoViewmodel extends ChangeNotifier {
     } else {
       appLogger.e("Form validation failed");
     }
+  }
+
+  buildRequestBody() {
+    final formData = formKey.currentState?.value;
+    Map<String, dynamic> requestBody = {
+      "first_name": formData?["first_name"],
+      "date_of_birth": formData?["date_of_birth"]?.toIso8601String(),
+      "gender": formData?["gender"],
+      "emergencyContact": formData?["emergencyContact"],
+      "chronicDiseases": formData?["chronicDiseases"],
+      "allergies": formData?["allergies"],
+      "previousSurgeries": formData?["previousSurgeries"],
+      "familyMedicalHistory": formData?["familyMedicalHistory"],
+      "currentMedications": userInfo?.currentMedications
+          .map((medication) => {
+                "medication": medication.id,
+                "dosage": medication.dosage,
+                "frequency": medication.frequency,
+                "startDate": medication.startDate?.toIso8601String(),
+                "endDate": medication.endDate?.toIso8601String(),
+                "prescribingDoctor": medication.prescribingDoctor,
+              })
+          .toList(),
+      "medicalVisits": userInfo?.medicalVisits
+          .map((visit) => {
+                "subject": visit.subject,
+                "dateOfVisit": visit.dateOfVisit?.toIso8601String(),
+                "healthcareProvider": visit.healthcareProvider?.toJson(),
+                "diagnosis": visit.diagnosis,
+                "treatmentPlan": visit.treatmentPlan?.toJson(),
+              })
+          .toList(),
+      "laboratoryReports": userInfo?.laboratoryReports
+          .map((report) => {
+                "testType": report.testType,
+                "testDate": report.testDate?.toIso8601String(),
+                "resultsSummary": report.resultsSummary,
+              })
+          .toList(),
+      "vitalSigns": userInfo?.vitalSigns
+          .map((vs) => {
+                "bloodPressure": vs.bloodPressure?.toJson(),
+                "heartRate": vs.heartRate,
+                "bloodGlucoseLevel": vs.bloodGlucoseLevel,
+              })
+          .toList(),
+    };
+
+    return requestBody;
   }
 }
