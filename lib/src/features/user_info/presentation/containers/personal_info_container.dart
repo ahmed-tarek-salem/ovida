@@ -18,7 +18,6 @@ class PersonalInfoContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewmodel = di.get<UserInfoViewmodel>();
     final user = viewmodel.userInfo?.user;
-    final userInfo = viewmodel.userInfo;
     return ListView(
       children: [
         Text(
@@ -33,22 +32,22 @@ class PersonalInfoContainer extends StatelessWidget {
         TextFieldWithHeader(
             header: "Full Name".hardCoded,
             textField: FormBuilderTextField(
-                name: "first_name",
-                initialValue: userInfo?.user.firstName,
+                name: "firstName",
+                initialValue: user?.firstName,
                 decoration: InputDecoration(
                     hintText: "Enter your full name".hardCoded))),
-        TextFieldWithHeader(
-            header: "Date of Birth",
-            textField: FormBuilderDateTimePicker(
-              name: "date_of_birth",
-              inputType: InputType.date,
-              format: DateFormat("dd/MM/yyyy"),
-              initialDate: DateTime(2000),
-              lastDate: DateTime.now(),
-              decoration: InputDecoration(
-                  hintText: "Select your date of birth".hardCoded,
-                  suffixIcon: Icon(Icons.calendar_today)),
-            )),
+        // TextFieldWithHeader(
+        //     header: "Date of Birth",
+        //     textField: FormBuilderDateTimePicker(
+        //       name: "dateOfBirth",
+        //       inputType: InputType.date,
+        //       format: DateFormat("dd/MM/yyyy"),
+        //       initialDate: DateTime(2000),
+        //       lastDate: DateTime.now(),
+        //       decoration: InputDecoration(
+        //           hintText: "Select your date of birth".hardCoded,
+        //           suffixIcon: Icon(Icons.calendar_today)),
+        //     )),
         TextFieldWithHeader(
             header: "Gender",
             textField: FormBuilderDropdown(

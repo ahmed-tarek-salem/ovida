@@ -37,4 +37,16 @@ class NetworkService {
   Future<Response<T>> post<T>(String path, {Object? data}) async {
     return _dio.post<T>(path, data: data);
   }
+
+  Future<Response<T>> put<T>(String path, {Object? data}) async {
+    return _dio.put<T>(path, data: data);
+  }
+
+  Future<Response<T>> delete<T>(String path, {Object? data}) async {
+    return _dio.delete<T>(path, data: data);
+  }
+
+  Future<Response<T>> patch<T>(String path, {Object? data}) async {
+    return _dio.patch<T>(path, data: data);
+  }
 }

@@ -4,7 +4,8 @@ import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
-import 'package:ovida/src/features/profile/data/models/dropdown_menus_model.dart';
+import 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
+import 'package:ovida/src/features/user_info/data/models/dropdown_menus_model.dart';
 import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
 import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
 import 'package:ovida/src/features/user_info/data/repositories/user_info_repo.dart';
@@ -127,21 +128,30 @@ class UserInfoViewmodel extends ChangeNotifier {
     notifyListeners();
   }
 
-  submitForm() {
-    if (formKey.currentState?.saveAndValidate() ?? false) {
-      final formData = formKey.currentState?.value;
-      appLogger.d("Form Data: $formData");
-      // Handle form submission logic here
-    } else {
-      appLogger.e("Form validation failed");
+  Future<void> submitForm(BuildContext context) async {
+    try {
+      LoadingOverlay.show();
+      if (formKey.currentState?.saveAndValidate() ?? false) {
+        final formData = formKey.currentState?.value;
+        appLogger.d("Form Data: $formData");
+        await _repo.updateUserInfo(buildRequestBody());
+      } else {
+        appLogger.e("Form validation failed");
+      }
+      LoadingOverlay.hide();
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    } catch (e) {
+      appLogger.e("Error submitting form: $e");
+      LoadingOverlay.showErrorMessage("Failed to update user info".hardCoded);
     }
   }
 
-  buildRequestBody() {
+  Map<String, dynamic> buildRequestBody() {
     final formData = formKey.currentState?.value;
     Map<String, dynamic> requestBody = {
-      "first_name": formData?["first_name"],
-      "date_of_birth": formData?["date_of_birth"]?.toIso8601String(),
+      "firstName": formData?["firstName"],
+      "dateOfBirth": formData?["dateOfBirth"]?.toIso8601String(),
       "gender": formData?["gender"],
       "emergencyContact": formData?["emergencyContact"],
       "chronicDiseases": formData?["chronicDiseases"],
@@ -150,6 +160,7 @@ class UserInfoViewmodel extends ChangeNotifier {
       "familyMedicalHistory": formData?["familyMedicalHistory"],
       "currentMedications": userInfo?.currentMedications
           .map((medication) => {
+                "action": "add",
                 "medication": medication.id,
                 "dosage": medication.dosage,
                 "frequency": medication.frequency,
@@ -160,6 +171,7 @@ class UserInfoViewmodel extends ChangeNotifier {
           .toList(),
       "medicalVisits": userInfo?.medicalVisits
           .map((visit) => {
+                "action": "add",
                 "subject": visit.subject,
                 "dateOfVisit": visit.dateOfVisit?.toIso8601String(),
                 "healthcareProvider": visit.healthcareProvider?.toJson(),
@@ -169,6 +181,7 @@ class UserInfoViewmodel extends ChangeNotifier {
           .toList(),
       "laboratoryReports": userInfo?.laboratoryReports
           .map((report) => {
+                "action": "add",
                 "testType": report.testType,
                 "testDate": report.testDate?.toIso8601String(),
                 "resultsSummary": report.resultsSummary,
@@ -176,6 +189,7 @@ class UserInfoViewmodel extends ChangeNotifier {
           .toList(),
       "vitalSigns": userInfo?.vitalSigns
           .map((vs) => {
+                "action": "add",
                 "bloodPressure": vs.bloodPressure?.toJson(),
                 "heartRate": vs.heartRate,
                 "bloodGlucoseLevel": vs.bloodGlucoseLevel,

@@ -16,15 +16,22 @@ class UserInfoResponse {
   factory UserInfoResponse.fromJson(Map<String, dynamic> json) =>
       UserInfoResponse(
         user: User.fromJson(json["user"]),
-        currentMedications: List<CurrentMedication>.from(
-            json["currentMedications"]
+        currentMedications: json["currentMedications"] == null
+            ? []
+            : List<CurrentMedication>.from(json["currentMedications"]
                 .map((x) => CurrentMedication.fromJson(x))),
-        laboratoryReports: List<LaboratoryReport>.from(
-            json["laboratoryReports"].map((x) => LaboratoryReport.fromJson(x))),
-        medicalVisits: List<MedicalVisit>.from(
-            json["medicalVisits"].map((x) => MedicalVisit.fromJson(x))),
-        vitalSigns: List<VitalSign>.from(
-            json["vitalSigns"].map((x) => VitalSign.fromJson(x))),
+        laboratoryReports: json["laboratoryReports"] == null
+            ? []
+            : List<LaboratoryReport>.from(json["laboratoryReports"]
+                .map((x) => LaboratoryReport.fromJson(x))),
+        medicalVisits: json["medicalVisits"] == null
+            ? []
+            : List<MedicalVisit>.from(
+                json["medicalVisits"].map((x) => MedicalVisit.fromJson(x))),
+        vitalSigns: json["vitalSigns"] == null
+            ? []
+            : List<VitalSign>.from(
+                json["vitalSigns"].map((x) => VitalSign.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -247,9 +254,9 @@ class User {
   final List<String> allergies;
   final List<String> previousSurgeries;
   final List<String> familyMedicalHistory;
-  final List<dynamic> fcmTokens;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  // final List<dynamic> fcmTokens;
+  // final DateTime createdAt;
+  // final DateTime updatedAt;
   final int? v;
 
   User({
@@ -266,9 +273,9 @@ class User {
     required this.allergies,
     required this.previousSurgeries,
     required this.familyMedicalHistory,
-    required this.fcmTokens,
-    required this.createdAt,
-    required this.updatedAt,
+    // required this.fcmTokens,
+    // required this.createdAt,
+    // required this.updatedAt,
     required this.v,
   });
 
@@ -285,16 +292,21 @@ class User {
         email: json["email"],
         gender: json["gender"],
         alternativeContact: json["alternativeContact"],
-        chronicDiseases:
-            List<String>.from(json["chronicDiseases"].map((x) => x)),
-        allergies: List<String>.from(json["allergies"].map((x) => x)),
-        previousSurgeries:
-            List<String>.from(json["previousSurgeries"].map((x) => x)),
-        familyMedicalHistory:
-            List<String>.from(json["familyMedicalHistory"].map((x) => x)),
-        fcmTokens: List<dynamic>.from(json["fcmTokens"].map((x) => x)),
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        chronicDiseases: json["chronicDiseases"] == null
+            ? []
+            : List<String>.from(json["chronicDiseases"].map((x) => x)),
+        allergies: json["allergies"] == null
+            ? []
+            : List<String>.from(json["allergies"].map((x) => x)),
+        previousSurgeries: json["previousSurgeries"] == null
+            ? []
+            : List<String>.from(json["previousSurgeries"].map((x) => x)),
+        familyMedicalHistory: json["familyMedicalHistory"] == null
+            ? []
+            : List<String>.from(json["familyMedicalHistory"].map((x) => x)),
+        // fcmTokens: List<dynamic>.from(json["fcmTokens"].map((x) => x)),
+        // createdAt: DateTime.parse(json["createdAt"]),
+        // updatedAt: DateTime.parse(json["updatedAt"]),
         v: json["__v"],
       );
 
@@ -314,9 +326,6 @@ class User {
             List<dynamic>.from(previousSurgeries.map((x) => x)),
         "familyMedicalHistory":
             List<dynamic>.from(familyMedicalHistory.map((x) => x)),
-        "fcmTokens": List<dynamic>.from(fcmTokens.map((x) => x)),
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
         "__v": v,
       };
 }

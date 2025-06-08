@@ -57,7 +57,7 @@ class _MedicalVisitsContainerState extends State<MedicalVisitsContainer> {
               name: "date_of_vist",
               inputType: InputType.date,
               format: DateFormat("dd/MM/yyyy"),
-              initialDate: DateTime(2000),
+              initialDate: DateTime(2025),
               lastDate: DateTime.now(),
               onChanged: (date) {
                 dateOfVisit = date;

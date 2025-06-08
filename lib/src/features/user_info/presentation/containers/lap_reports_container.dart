@@ -28,7 +28,6 @@ class _LapReportsContainerState extends State<LapReportsContainer> {
       TextEditingController();
   String? testType;
   DateTime? testDate;
-  String? resultsSummary;
 
   @override
   void dispose() {
@@ -62,7 +61,7 @@ class _LapReportsContainerState extends State<LapReportsContainer> {
               name: "test_date",
               inputType: InputType.date,
               format: DateFormat("dd/MM/yyyy"),
-              initialDate: DateTime(2000),
+              initialDate: DateTime(2025),
               lastDate: DateTime.now(),
               onChanged: (date) {
                 testDate = date;
@@ -79,9 +78,6 @@ class _LapReportsContainerState extends State<LapReportsContainer> {
               hintText: "Enter the results summary".hardCoded,
               border: OutlineInputBorder(),
             ),
-            onChanged: (value) {
-              resultsSummary = value;
-            },
           ),
         ),
         SizedBox(height: 16.h),
@@ -114,11 +110,11 @@ class _LapReportsContainerState extends State<LapReportsContainer> {
         SizedBox(height: 16.h),
         AddButtonWithIcon(
           onPressed: () {
-            if (testType != null && resultsSummary != null) {
+            if (testType != null && resultsSummaryController.text.isNotEmpty) {
               viewmodel.addLabReport(LaboratoryReport(
                 testType: testType,
                 testDate: testDate,
-                resultsSummary: resultsSummary,
+                resultsSummary: resultsSummaryController.text,
               ));
             } else {
               LoadingOverlay.showErrorMessage(

@@ -108,7 +108,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                 viewmodel
                                     .updatePageIndex(viewmodel.pageIndex + 1);
                               } else {
-                                viewmodel.submitForm();
+                                viewmodel.submitForm(context);
                                 // Navigator.push(context,
                                 //     MaterialPageRoute(builder: (context) {
                                 //   return const HomeScreen();

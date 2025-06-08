@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gradient_borders/box_borders/gradient_box_border.dart';
+import 'package:intl/intl.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
-import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/shared/widgets/add_button_with_icon.dart';
@@ -11,6 +10,7 @@ import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
 import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
 import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
 import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
+import 'package:ovida/src/features/user_info/presentation/widgets/custom_dropdown_singleselection.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/medications_dropdown.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/tab_tile.dart';
 import 'package:ovida/src/features/user_info/presentation/widgets/tab_to_remove_hints.dart';
@@ -81,14 +81,17 @@ class _CurrentMedicationsContainerState
             Expanded(
                 child: TextFieldWithHeader(
               header: "Frequency".hardCoded,
-              textField: TextField(
-                onChanged: (value) {
-                  frequency = value;
+              textField: CustomDropdownSingleSelection(
+                searchHintText: "Select frequency".hardCoded,
+                items: [
+                  "once-daily",
+                  "twice-daily",
+                  "three-times-daily",
+                  "four-times-daily",
+                ],
+                onChanged: (val) {
+                  frequency = val;
                 },
-                decoration: InputDecoration(
-                  hintText: "Ex: 2 times a day".hardCoded,
-                  border: OutlineInputBorder(),
-                ),
               ),
             )),
           ],
@@ -96,36 +99,40 @@ class _CurrentMedicationsContainerState
         Row(
           children: [
             Expanded(
-                child: TextFieldWithHeader(
-              header: "Start Date".hardCoded,
-              textField: TextField(
-                onChanged: (value) {
-                  startDate = DateTime.parse(value);
-                },
-                decoration: InputDecoration(
-                  hintText: "Select Date".hardCoded,
-                  border: OutlineInputBorder(),
-                  suffixIcon: SvgPicture.asset(AppIcons.calendar,
-                      height: 10.h, fit: BoxFit.scaleDown),
-                ),
-              ),
-            )),
+              child: TextFieldWithHeader(
+                  header: "Start Date".hardCoded,
+                  textField: FormBuilderDateTimePicker(
+                    name: "start_date",
+                    inputType: InputType.date,
+                    format: DateFormat("dd/MM/yyyy"),
+                    initialDate: DateTime(2025),
+                    lastDate: DateTime.now(),
+                    onChanged: (date) {
+                      startDate = date;
+                    },
+                    decoration: InputDecoration(
+                        hintText: "Select start date".hardCoded,
+                        suffixIcon: Icon(Icons.calendar_today)),
+                  )),
+            ),
             SizedBox(width: 8),
             Expanded(
-                child: TextFieldWithHeader(
-              header: "End Date".hardCoded,
-              textField: TextField(
-                onChanged: (value) {
-                  endDate = DateTime.parse(value);
-                },
-                decoration: InputDecoration(
-                  hintText: "Select Date".hardCoded,
-                  border: OutlineInputBorder(),
-                  suffixIcon: SvgPicture.asset(AppIcons.calendar,
-                      height: 10.h, fit: BoxFit.scaleDown),
-                ),
-              ),
-            )),
+              child: TextFieldWithHeader(
+                  header: "End Date".hardCoded,
+                  textField: FormBuilderDateTimePicker(
+                    name: "end_date",
+                    inputType: InputType.date,
+                    format: DateFormat("dd/MM/yyyy"),
+                    initialDate: DateTime(2025),
+                    lastDate: DateTime.now(),
+                    onChanged: (date) {
+                      startDate = date;
+                    },
+                    decoration: InputDecoration(
+                        hintText: "Select end date".hardCoded,
+                        suffixIcon: Icon(Icons.calendar_today)),
+                  )),
+            ),
           ],
         ),
         TextFieldWithHeader(
