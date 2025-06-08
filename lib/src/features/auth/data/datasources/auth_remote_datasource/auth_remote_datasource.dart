@@ -7,6 +7,7 @@ import 'package:ovida/src/features/auth/data/models/sign_up_response.dart';
 abstract class AuthRemoteDatasource {
   Future<SignUpResponse> signUp(SignUpRequest request);
   Future<SignUpResponse> login(SignUpRequest request);
+  Future<void> postFcmToken(String token);
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -35,6 +36,18 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
         data: request.toJson(),
       );
       return SignUpResponse.fromJson(response.data);
+    } catch (e) {
+      throw ErrorHandler.handleError(e);
+    }
+  }
+
+  @override
+  Future<void> postFcmToken(String token) async {
+    try {
+      await _networkService.post(
+        AppEndpoints.fcmToken,
+        data: {"token": token},
+      );
     } catch (e) {
       throw ErrorHandler.handleError(e);
     }

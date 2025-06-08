@@ -5,6 +5,7 @@ import 'package:ovida/src/features/auth/data/models/sign_up_response.dart';
 abstract class AuthRepository {
   Future<SignUpResponse> signUp(SignUpRequest request);
   Future<SignUpResponse> login(SignUpRequest request);
+  Future<void> postFcmToken(String token);
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -20,5 +21,10 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<SignUpResponse> login(SignUpRequest request) async {
     return _datasource.login(request);
+  }
+
+  @override
+  Future<void> postFcmToken(String token) async {
+    return _datasource.postFcmToken(token);
   }
 }

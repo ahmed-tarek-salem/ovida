@@ -1,5 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/services/network/network_service.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
@@ -15,6 +15,18 @@ class AuthViewmodel extends ChangeNotifier {
   UserModel? userModel;
   AppError? error;
   bool loading = false;
+
+  Future<void> _handleFcmToken() async {
+    try {
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await _repo.postFcmToken(fcmToken);
+        appLogger.d("FCM token sent successfully");
+      }
+    } catch (e) {
+      appLogger.e("Error sending FCM token: $e");
+    }
+  }
 
   Future<void> signUp({
     required String phoneNumber,
@@ -34,6 +46,7 @@ class AuthViewmodel extends ChangeNotifier {
       userModel = response.user;
       userModel = userModel!.copyWith(token: response.token);
       di<NetworkService>().setToken(response.token);
+      await _handleFcmToken();
     } on AppError catch (e) {
       error = e;
     } finally {
@@ -60,6 +73,7 @@ class AuthViewmodel extends ChangeNotifier {
       appLogger.d("Login response: $response");
       userModel = response.user;
       di<NetworkService>().setToken(response.token);
+      await _handleFcmToken();
     } on AppError catch (e) {
       error = e;
     } finally {
