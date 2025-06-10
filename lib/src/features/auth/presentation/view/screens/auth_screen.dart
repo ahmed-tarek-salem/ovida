@@ -60,7 +60,7 @@ class _AuthScreenState extends State<AuthScreen> {
     }
 
     if (_viewmodel.userModel != null && mounted) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const UserInfoScreen()),
       );

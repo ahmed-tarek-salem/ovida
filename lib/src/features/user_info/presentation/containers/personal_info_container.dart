@@ -73,7 +73,7 @@ class PersonalInfoContainer extends StatelessWidget {
         TextFieldWithHeader(
             header: "Emergency Phone Number",
             textField: FormBuilderTextField(
-              initialValue: user?.emergencyContact?.phoneNumber,
+              initialValue: user?.emergencyContact,
               name: 'emergencyContact',
               decoration: InputDecoration(
                   hintText: "Enter your emergency phone number".hardCoded),
