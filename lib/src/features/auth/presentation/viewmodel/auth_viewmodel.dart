@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/services/local_storage/hive_local_storage/hive_local_storage.dart';
+import 'package:ovida/src/core/services/local_storage/local_storage.dart';
 import 'package:ovida/src/core/services/network/network_service.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
@@ -84,6 +85,6 @@ class AuthViewmodel extends ChangeNotifier {
     appLogger.d("Setting user and token from response: $response");
     userModel = response.user;
     di<NetworkService>().setToken(response.token);
-    di<HiveLocalStorage>().saveToken(response.token);
+    di<LocalStorage>().saveToken(response.token);
   }
 }
