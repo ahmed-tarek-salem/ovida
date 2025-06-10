@@ -152,7 +152,7 @@ class _CurrentMedicationsContainerState
             if (selectedMedication != null) {
               viewmodel.addMedication(CurrentMedication(
                 id: selectedMedication!.id,
-                medication: selectedMedication!.brandName,
+                brandName: selectedMedication!.brandName,
                 dosage: dosage,
                 frequency: frequency,
                 startDate: startDate,
@@ -196,7 +196,7 @@ class _CurrentMedicationsContainerState
                     onTap: () {
                       viewmodel.removeMedication(currentMedication);
                     },
-                    child: TabTile(title: currentMedication.medication ?? ""),
+                    child: TabTile(title: currentMedication.brandName ?? ""),
                   );
                 }).toList(),
               );

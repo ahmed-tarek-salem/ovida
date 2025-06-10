@@ -64,7 +64,8 @@ class UserInfoResponse {
 
 class CurrentMedication {
   final String? id;
-  final String? medication;
+  final String? medicationId;
+  final String? brandName;
   final String? dosage;
   final String? frequency;
   final DateTime? startDate;
@@ -76,7 +77,8 @@ class CurrentMedication {
 
   CurrentMedication({
     required this.id,
-    required this.medication,
+    this.medicationId,
+    required this.brandName,
     required this.dosage,
     required this.frequency,
     required this.startDate,
@@ -90,7 +92,10 @@ class CurrentMedication {
   factory CurrentMedication.fromJson(Map<String, dynamic> json) =>
       CurrentMedication(
         id: json["_id"],
-        medication: json["medication"],
+        medicationId:
+            json["medication"] != null ? json["medication"]["_id"] : null,
+        brandName:
+            json["medication"] != null ? json["medication"]["brandName"] : null,
         dosage: json["dosage"],
         frequency: json["frequency"],
         startDate: json["startDate"] == null
@@ -242,7 +247,7 @@ class TreatmentPlan {
 
 class User {
   final Address? address;
-  final EmergencyContact? emergencyContact;
+  final String? emergencyContact;
   final String? id;
   final String? phoneNumber;
   final String? firstName;
@@ -282,9 +287,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
         address:
             json["address"] == null ? null : Address.fromJson(json["address"]),
-        emergencyContact: json["emergencyContact"] == null
-            ? null
-            : EmergencyContact.fromJson(json["emergencyContact"]),
+        emergencyContact: json["emergencyContact"],
         id: json["_id"],
         phoneNumber: json["phoneNumber"],
         firstName: json["firstName"],
@@ -312,7 +315,7 @@ class User {
 
   Map<String, dynamic> toJson() => {
         "address": address?.toJson(),
-        "emergencyContact": emergencyContact?.toJson(),
+        "emergencyContact": emergencyContact,
         "_id": id,
         "phoneNumber": phoneNumber,
         "firstName": firstName,
@@ -359,31 +362,6 @@ class Address {
         "state": state,
         "zipCode": zipCode,
         "country": country,
-      };
-}
-
-class EmergencyContact {
-  final String? name;
-  final String? relationship;
-  final String? phoneNumber;
-
-  EmergencyContact({
-    required this.name,
-    required this.relationship,
-    required this.phoneNumber,
-  });
-
-  factory EmergencyContact.fromJson(Map<String, dynamic> json) =>
-      EmergencyContact(
-        name: json["name"],
-        relationship: json["relationship"],
-        phoneNumber: json["phoneNumber"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "relationship": relationship,
-        "phoneNumber": phoneNumber,
       };
 }
 
