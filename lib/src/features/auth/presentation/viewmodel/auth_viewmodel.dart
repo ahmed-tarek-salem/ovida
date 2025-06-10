@@ -1,15 +1,16 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
-import 'package:ovida/src/core/services/local_storage/hive_local_storage/hive_local_storage.dart';
 import 'package:ovida/src/core/services/local_storage/local_storage.dart';
 import 'package:ovida/src/core/services/network/network_service.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
+import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/auth/data/models/sign_up_request.dart';
 import 'package:ovida/src/features/auth/data/models/sign_up_response.dart';
 import 'package:ovida/src/features/auth/data/models/user_model.dart';
 import 'package:ovida/src/features/auth/data/repositories/auth_repository.dart';
+import 'package:ovida/src/features/auth/presentation/view/screens/auth_screen.dart';
 
 class AuthViewmodel extends ChangeNotifier {
   final AuthRepository _repo;
@@ -86,5 +87,24 @@ class AuthViewmodel extends ChangeNotifier {
     userModel = response.user;
     di<NetworkService>().setToken(response.token);
     di<LocalStorage>().saveToken(response.token);
+  }
+
+  Future<void> logout(BuildContext context) async {
+    appLogger.d("Logging out");
+    try {
+      LoadingOverlay.show();
+      await _repo.logout();
+      di<LocalStorage>().clearToken();
+      userModel = null;
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) {
+        return const AuthScreen();
+      }));
+    } on AppError catch (e) {
+      appLogger.e("Logout failed: $e");
+      LoadingOverlay.showErrorMessage("Logout failed: ${e.message}");
+    } finally {
+      LoadingOverlay.hide();
+    }
   }
 }

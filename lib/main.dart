@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:ovida/firebase_options.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/services/local_storage/local_storage.dart';
+import 'package:ovida/src/core/services/network/network_service.dart';
 import 'package:ovida/src/core/utilities/notifications_helper.dart';
 import 'package:ovida/src/features/auth/presentation/view/screens/auth_screen.dart';
 import 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
@@ -18,6 +19,7 @@ void main() async {
   await NotificationService.instance.initialize();
   await DiService.init();
   await di<LocalStorage>().init();
+  di<NetworkService>().setToken(di<LocalStorage>().getToken());
   runApp(const MyApp());
 }
 

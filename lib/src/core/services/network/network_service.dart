@@ -20,7 +20,7 @@ class NetworkService {
     _dio.interceptors.add(CustomLoggerInterceptor());
   }
 
-  void setToken(String token) {
+  void setToken(String? token) {
     _dio.options.headers['Authorization'] = 'Bearer $token';
     appLogger.d("Token set to network service as $token");
   }

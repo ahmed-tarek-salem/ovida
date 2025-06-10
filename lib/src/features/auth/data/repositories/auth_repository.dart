@@ -6,6 +6,8 @@ abstract class AuthRepository {
   Future<SignUpResponse> signUp(SignUpRequest request);
   Future<SignUpResponse> login(SignUpRequest request);
   Future<void> postFcmToken(String token);
+  Future<void> logout();
+  Future<void> removeFcmToken(String token);
 }
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -26,5 +28,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> postFcmToken(String token) async {
     return _datasource.postFcmToken(token);
+  }
+
+  @override
+  Future<void> logout() async {
+    return _datasource.logout();
+  }
+
+  @override
+  Future<void> removeFcmToken(String token) async {
+    return _datasource.removeFcmToken(token);
   }
 }

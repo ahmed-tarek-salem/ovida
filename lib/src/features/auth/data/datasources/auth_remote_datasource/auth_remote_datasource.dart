@@ -8,6 +8,8 @@ abstract class AuthRemoteDatasource {
   Future<SignUpResponse> signUp(SignUpRequest request);
   Future<SignUpResponse> login(SignUpRequest request);
   Future<void> postFcmToken(String token);
+  Future<void> logout();
+  Future<void> removeFcmToken(String token);
 }
 
 class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
@@ -45,6 +47,29 @@ class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   Future<void> postFcmToken(String token) async {
     try {
       await _networkService.post(
+        AppEndpoints.fcmToken,
+        data: {"token": token},
+      );
+    } catch (e) {
+      throw ErrorHandler.handleError(e);
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await _networkService.post(
+        AppEndpoints.logout,
+      );
+    } catch (e) {
+      throw ErrorHandler.handleError(e);
+    }
+  }
+
+  @override
+  Future<void> removeFcmToken(String token) async {
+    try {
+      await _networkService.delete(
         AppEndpoints.fcmToken,
         data: {"token": token},
       );

@@ -4,6 +4,8 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_images.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -69,16 +71,23 @@ class ProfileScreen extends StatelessWidget {
                       color: Colors.white,
                       height: 36.h,
                     ),
-                    Row(
-                      children: [
-                        Text("Logout"),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.arrow_forward_ios,
-                              color: AppColors.primary, size: 16.sp),
-                        )
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        di<AuthViewmodel>().logout(context);
+                      },
+                      child: Row(
+                        children: [
+                          Text("Logout"),
+                          const Spacer(),
+                          IconButton(
+                            onPressed: () {
+                              di<AuthViewmodel>().logout(context);
+                            },
+                            icon: Icon(Icons.arrow_forward_ios,
+                                color: AppColors.primary, size: 16.sp),
+                          )
+                        ],
+                      ),
                     ),
                     // Divider(
                     //   color: Colors.white,
