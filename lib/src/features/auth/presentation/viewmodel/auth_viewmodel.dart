@@ -1,10 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/core/services/local_storage/hive_local_storage/hive_local_storage.dart';
 import 'package:ovida/src/core/services/network/network_service.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/auth/data/models/sign_up_request.dart';
+import 'package:ovida/src/features/auth/data/models/sign_up_response.dart';
 import 'package:ovida/src/features/auth/data/models/user_model.dart';
 import 'package:ovida/src/features/auth/data/repositories/auth_repository.dart';
 
@@ -42,10 +44,7 @@ class AuthViewmodel extends ChangeNotifier {
           phoneNumber: phoneNumber,
         ),
       );
-      appLogger.d("Sign up response: $response");
-      userModel = response.user;
-      userModel = userModel!.copyWith(token: response.token);
-      di<NetworkService>().setToken(response.token);
+      setUserAndToken(response);
       await _handleFcmToken();
     } on AppError catch (e) {
       error = e;
@@ -70,9 +69,7 @@ class AuthViewmodel extends ChangeNotifier {
           phoneNumber: phoneNumber,
         ),
       );
-      appLogger.d("Login response: $response");
-      userModel = response.user;
-      di<NetworkService>().setToken(response.token);
+      setUserAndToken(response);
       await _handleFcmToken();
     } on AppError catch (e) {
       error = e;
@@ -81,5 +78,12 @@ class AuthViewmodel extends ChangeNotifier {
       loading = false;
       notifyListeners();
     }
+  }
+
+  void setUserAndToken(SignUpResponse response) {
+    appLogger.d("Setting user and token from response: $response");
+    userModel = response.user;
+    di<NetworkService>().setToken(response.token);
+    di<HiveLocalStorage>().saveToken(response.token);
   }
 }

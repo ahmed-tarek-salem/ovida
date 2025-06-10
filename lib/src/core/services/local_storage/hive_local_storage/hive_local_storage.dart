@@ -12,7 +12,7 @@ class HiveLocalStorage implements LocalStorage {
   }
 
   Future<void> openBoxes() async {
-    await Hive.openBox(HiveBoxesNames.user.name);
+    await Hive.openBox(HiveBoxesNames.token.name);
   }
 
   @override
@@ -25,18 +25,18 @@ class HiveLocalStorage implements LocalStorage {
     return Hive.box(boxName.name).get(key.name);
   }
 
-  // @override
-  // void saveUser(UserDataModel user) {
-  //   saveData<UserDataModel>(StorageKey.user, user);
-  // }
-
-  // @override
-  // UserDataModel? getUser() {
-  //   return getData<UserDataModel>(HiveBoxesNames.user, StorageKey.user);
-  // }
+  @override
+  void saveToken(String token) {
+    saveData<String>(StorageKey.token, token);
+  }
 
   @override
-  void clearUser() {
-    Hive.box(HiveBoxesNames.user.name).clear();
+  String? getToken() {
+    return getData<String>(HiveBoxesNames.token, StorageKey.token);
+  }
+
+  @override
+  void clearToken() {
+    Hive.box(HiveBoxesNames.token.name).clear();
   }
 }

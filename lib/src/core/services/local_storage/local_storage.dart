@@ -4,9 +4,9 @@ abstract class LocalStorage {
   Future<void> init();
   void saveData<T>(StorageKey key, T value);
   T? getData<T>(HiveBoxesNames boxName, StorageKey key);
-  // void saveUser(UserDataModel user);
-  // UserDataModel? getUser();
-  void clearUser();
+  void saveToken(String user);
+  String? getToken();
+  void clearToken();
 }
 
-enum StorageKey { user }
+enum StorageKey { token }

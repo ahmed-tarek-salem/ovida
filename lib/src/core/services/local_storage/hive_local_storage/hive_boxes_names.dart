@@ -1,3 +1,1 @@
-enum HiveBoxesNames {
-  user,
-}
+enum HiveBoxesNames { token }

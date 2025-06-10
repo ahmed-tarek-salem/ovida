@@ -26,4 +26,8 @@ class SignUpResponse {
       'user': user.toJson(),
     };
   }
+
+  @override
+  String toString() =>
+      'SignUpResponse(message: $message, token: $token, user: $user)';
 }
