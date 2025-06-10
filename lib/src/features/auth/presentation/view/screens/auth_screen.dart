@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:logger/logger.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_images.dart';
@@ -10,6 +12,7 @@ import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/shared/widgets/custom_progress_indicator.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
+import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:ovida/src/features/user_info/presentation/screens/user_info_screen.dart';
 
@@ -302,7 +305,25 @@ class SocialLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {}, // Placeholder for actual logic
+      onTap: () async {
+        try {
+          final GoogleSignIn googleSignIn = GoogleSignIn();
+          final googleUser = await googleSignIn.signIn();
+          final googleAuth = await googleUser!.authentication;
+          final idToken = googleAuth.idToken;
+
+          appLogger.i(googleUser);
+          appLogger.i(googleAuth.accessToken);
+          appLogger.i(idToken);
+          appLogger.i(googleAuth.accessToken);
+
+          // Handle successful sign-in logic here
+          appLogger.i("Google Sign-In successful");
+        } catch (e) {
+          appLogger.e("Google Sign-In failed: $e");
+          LoadingOverlay.showErrorMessage("Google Sign-In failed: $e");
+        }
+      }, // Placeholder for actual logic
       child: Image.asset(AppImages.google, height: 70.h),
     );
   }
