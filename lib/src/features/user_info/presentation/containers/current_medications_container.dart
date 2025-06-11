@@ -7,6 +7,7 @@ import 'package:ovida/src/core/extensions/hardcoded.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/shared/widgets/add_button_with_icon.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
+import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
 import 'package:ovida/src/features/user_info/data/models/user_info_response.dart';
 import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
@@ -176,6 +177,7 @@ class _CurrentMedicationsContainerState
             listenable: viewmodel,
             builder: (context, child) {
               final medications = viewmodel.userInfo?.currentMedications;
+              appLogger.d(medications?.first.brandName);
               if (medications == null || medications.isEmpty) {
                 return Center(
                   child: Text(

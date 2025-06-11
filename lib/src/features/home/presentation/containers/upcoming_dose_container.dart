@@ -31,53 +31,57 @@ class _UpcomingDoseContainer extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text('Your next dose of Hemoclar at 03:00pm',
+          Text(
+              upcomingDose?.notificationTime == null
+                  ? "You have no upcoming doses"
+                  : 'Your next dose of Hemoclar at ${upcomingDose!.notificationTime!.hour.toString().padLeft(2, '0')}:${upcomingDose!.notificationTime!.minute.toString().padLeft(2, '0')} ',
               style: Theme.of(context).textTheme.bodySmall),
           SizedBox(height: 16.h),
-          Row(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      BorderedButtonWithIcon(
-                        height: 36.h,
-                        width: 74.w,
-                        text: "Take",
-                        iconPath: AppIcons.take,
-                        onPressed: () {},
-                      ),
-                      SizedBox(width: 8.w),
-                      BorderedButtonWithIcon(
-                        height: 36.h,
-                        width: 74.w,
-                        text: "Skip",
-                        iconPath: AppIcons.skip,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  BorderedButtonWithIcon(
-                    height: 36.h,
-                    width: 154.w,
-                    text: "Snooze for 10 mins",
-                    iconPath: AppIcons.snooze,
-                    onPressed: () {},
-                  ),
-                ],
-              ),
-              Spacer(),
-              GradientTimerWidget(
-                totalTimeInMinutes: 15,
-                gradientColors: const [
-                  Color(0xFFB8A6FF),
-                  Color(0xFF8B7CFF)
-                ], // Purple gradient
-                strokeWidth: 8.0,
-              ),
-            ],
-          ),
+          if (upcomingDose?.notificationTime != null)
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        BorderedButtonWithIcon(
+                          height: 36.h,
+                          width: 74.w,
+                          text: "Take",
+                          iconPath: AppIcons.take,
+                          onPressed: () {},
+                        ),
+                        SizedBox(width: 8.w),
+                        BorderedButtonWithIcon(
+                          height: 36.h,
+                          width: 74.w,
+                          text: "Skip",
+                          iconPath: AppIcons.skip,
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8.h),
+                    BorderedButtonWithIcon(
+                      height: 36.h,
+                      width: 154.w,
+                      text: "Snooze for 10 mins",
+                      iconPath: AppIcons.snooze,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                Spacer(),
+                GradientTimerWidget(
+                  totalTimeInMinutes: 15,
+                  gradientColors: const [
+                    Color(0xFFB8A6FF),
+                    Color(0xFF8B7CFF)
+                  ], // Purple gradient
+                  strokeWidth: 8.0,
+                ),
+              ],
+            ),
         ],
       ),
     );

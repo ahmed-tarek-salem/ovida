@@ -63,6 +63,7 @@ class UserInfoRemoteDatasourceImpl implements UserInfoRemoteDatasource {
         AppEndpoints.updateUserInfo,
         data: body,
       );
+      appLogger.d("Done updating user info");
     } catch (e) {
       throw ErrorHandler.handleError(e);
     }

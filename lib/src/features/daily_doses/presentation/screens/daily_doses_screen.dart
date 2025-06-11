@@ -31,12 +31,13 @@ class DailyDosesScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 24.h),
-                  ...List.generate(
-                    5,
-                    (index) => DoseTile(
-                        withOutDivider: false,
-                        dividerColor: AppColors.sectionsBackground),
-                  ),
+                  // ...List.generate(
+                  //   5,
+                  //   (index) => DoseTile(
+
+                  //       withOutDivider: false,
+                  //       dividerColor: AppColors.sectionsBackground),
+                  // ),
                 ],
               );
             }));

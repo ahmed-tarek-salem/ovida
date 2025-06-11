@@ -6,6 +6,7 @@ import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_images.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -74,6 +75,7 @@ class ProfileScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         di<AuthViewmodel>().logout(context);
+                        di<UserInfoViewmodel>().clearUser();
                       },
                       child: Row(
                         children: [

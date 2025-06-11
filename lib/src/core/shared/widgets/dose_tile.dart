@@ -6,14 +6,14 @@ import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
 
 class DoseTile extends StatelessWidget {
-  // final String time;
-  // final String medicine;
+  final DateTime time;
+  final String medicine;
   final bool withOutDivider;
   final Color? dividerColor;
   const DoseTile(
       {super.key,
-      // required this.time,
-      // required this.medicine,
+      required this.time,
+      required this.medicine,
       this.withOutDivider = false,
       this.dividerColor = Colors.white});
 
@@ -31,7 +31,7 @@ class DoseTile extends StatelessWidget {
               ),
               SizedBox(width: 18.w),
               Text(
-                "Paracetamol - 09:00am",
+                "$medicine - ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}",
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,

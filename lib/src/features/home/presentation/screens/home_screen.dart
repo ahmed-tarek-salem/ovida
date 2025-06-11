@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,6 +16,8 @@ import 'package:ovida/src/features/home/presentation/widgets/drug_info_dialog.da
 import 'package:ovida/src/features/home/presentation/widgets/gradient_bordered_button_with_icon.dart';
 import 'package:ovida/src/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:ovida/src/features/profile/presentation/screens/profile_screen.dart';
+import 'package:ovida/src/features/profile/presentation/viewmodel/profile_viewmodel.dart';
+import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 
 part '../containers/daily_doses_container.dart';
 part '../containers/home_header_container.dart';
@@ -28,11 +32,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final viewmodel = di<HomeViewmodel>();
+  final userInfo = di<UserInfoViewmodel>();
 
   @override
   void initState() {
     super.initState();
     viewmodel.getDoses();
+    userInfo.getData();
   }
 
   @override

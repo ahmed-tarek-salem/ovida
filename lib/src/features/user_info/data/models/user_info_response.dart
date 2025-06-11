@@ -246,7 +246,7 @@ class TreatmentPlan {
 }
 
 class User {
-  final Address? address;
+  final String? address;
   final String? emergencyContact;
   final String? id;
   final String? phoneNumber;
@@ -285,8 +285,7 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        address:
-            json["address"] == null ? null : Address.fromJson(json["address"]),
+        address: json["address"],
         emergencyContact: json["emergencyContact"],
         id: json["_id"],
         phoneNumber: json["phoneNumber"],
@@ -314,7 +313,7 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "address": address?.toJson(),
+        "address": address,
         "emergencyContact": emergencyContact,
         "_id": id,
         "phoneNumber": phoneNumber,
@@ -330,38 +329,6 @@ class User {
         "familyMedicalHistory":
             List<dynamic>.from(familyMedicalHistory.map((x) => x)),
         "__v": v,
-      };
-}
-
-class Address {
-  final String? street;
-  final String? city;
-  final String? state;
-  final String? zipCode;
-  final String? country;
-
-  Address({
-    required this.street,
-    required this.city,
-    required this.state,
-    required this.zipCode,
-    required this.country,
-  });
-
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-        street: json["street"],
-        city: json["city"],
-        state: json["state"],
-        zipCode: json["zipCode"],
-        country: json["country"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "street": street,
-        "city": city,
-        "state": state,
-        "zipCode": zipCode,
-        "country": country,
       };
 }
 

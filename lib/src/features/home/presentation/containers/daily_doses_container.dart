@@ -15,6 +15,7 @@ class _DailyDoses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final numberOfDoses = min(previousDoses.length, 10);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 16.w),
       decoration: BoxDecoration(
@@ -61,7 +62,7 @@ class _DailyDoses extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           ...List.generate(
-            10,
+            numberOfDoses,
             (index) => Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: GestureDetector(
@@ -73,7 +74,13 @@ class _DailyDoses extends StatelessWidget {
                   );
                 },
                 child: DoseTile(
-                  withOutDivider: index == 9,
+                  time: previousDoses[index].notificationTime!,
+                  medicine: previousDoses[index]
+                          .medication
+                          ?.medicationDetails
+                          ?.brandName ??
+                      '',
+                  withOutDivider: index == numberOfDoses,
                 ),
               ),
             ),

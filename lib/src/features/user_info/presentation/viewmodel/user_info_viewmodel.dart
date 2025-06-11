@@ -58,13 +58,16 @@ class UserInfoViewmodel extends ChangeNotifier {
 
   Future<void> getData() async {
     try {
-      isLoading = true;
-      error = null;
-      await Future.wait([
-        getUserInfo(),
-        getDropdownMenus(),
-        getMedications(),
-      ]);
+      if (userInfo == null || dropdownMenus == null || medications == null) {
+        isLoading = true;
+        error = null;
+        await Future.wait([
+          getUserInfo(),
+          getDropdownMenus(),
+          getMedications(),
+        ]);
+      }
+      appLogger.d("User info: $userInfo");
     } on AppError catch (e) {
       error = e;
     } finally {
@@ -161,7 +164,7 @@ class UserInfoViewmodel extends ChangeNotifier {
       "currentMedications": userInfo?.currentMedications
           .map((medication) => {
                 "action": "add",
-                "medication": medication.id,
+                "medication": medication.medicationId,
                 "dosage": medication.dosage,
                 "frequency": medication.frequency,
                 "startDate": medication.startDate?.toIso8601String(),
@@ -199,5 +202,12 @@ class UserInfoViewmodel extends ChangeNotifier {
     };
 
     return requestBody;
+  }
+
+  void clearUser() {
+    userInfo = null;
+    dropdownMenus = null;
+    medications = null;
+    pageIndex = 0;
   }
 }
