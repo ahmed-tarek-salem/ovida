@@ -165,7 +165,8 @@ class UserInfoViewmodel extends ChangeNotifier {
                 "dosage": medication.dosage,
                 "frequency": medication.frequency,
                 "startDate": medication.startDate?.toIso8601String(),
-                "endDate": medication.endDate?.toIso8601String(),
+                "endDate": medication.endDate?.toIso8601String() ??
+                    DateTime(2050).toIso8601String(),
                 "prescribingDoctor": medication.prescribingDoctor,
               })
           .toList(),

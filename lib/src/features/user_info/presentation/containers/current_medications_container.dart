@@ -149,7 +149,7 @@ class _CurrentMedicationsContainerState
         ),
         AddButtonWithIcon(
           onPressed: () {
-            if (selectedMedication != null) {
+            if (selectedMedication != null && startDate != null) {
               viewmodel.addMedication(CurrentMedication(
                 id: selectedMedication!.id,
                 brandName: selectedMedication!.brandName,
@@ -161,7 +161,7 @@ class _CurrentMedicationsContainerState
               ));
             } else {
               LoadingOverlay.showErrorMessage(
-                  "Please select a medication".hardCoded);
+                  "Please select a medication and a start date".hardCoded);
             }
           },
           title: "Add Medication".hardCoded,

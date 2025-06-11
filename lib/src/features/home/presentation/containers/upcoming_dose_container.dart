@@ -1,7 +1,10 @@
 part of 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 
 class _UpcomingDoseContainer extends StatelessWidget {
-  const _UpcomingDoseContainer();
+  final Dose? upcomingDose;
+  const _UpcomingDoseContainer({
+    required this.upcomingDose,
+  });
 
   @override
   Widget build(BuildContext context) {

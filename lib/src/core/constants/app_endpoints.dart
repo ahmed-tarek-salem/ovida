@@ -7,6 +7,7 @@ class AppEndpoints {
   static const String updateUserInfo = '/auth/profile';
   static const String getDropdownData = '/drop-down-lists';
   static const String getMedications = '/medicine/medicines/brand-names';
+  static const String getDoses = '/current-medications/doses';
 
   static String getPharmacy(int pharmacyId) =>
       '/outdoor/lead/pharmacy/$pharmacyId';

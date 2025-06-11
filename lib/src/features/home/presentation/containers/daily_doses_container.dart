@@ -1,7 +1,17 @@
 part of 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 
 class _DailyDoses extends StatelessWidget {
-  const _DailyDoses();
+  final List<Dose> previousDoses;
+  final Function(String id)? onTakeDose;
+  final Function(String id)? onSkipDose;
+  final Function(String id)? onSnoozeDose;
+
+  const _DailyDoses({
+    required this.previousDoses,
+    required this.onTakeDose,
+    required this.onSkipDose,
+    required this.onSnoozeDose,
+  });
 
   @override
   Widget build(BuildContext context) {
