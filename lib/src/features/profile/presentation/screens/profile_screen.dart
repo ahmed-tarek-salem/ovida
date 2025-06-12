@@ -58,22 +58,23 @@ class ProfileScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.sp)),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Text("Medical History"),
-                        const Spacer(),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.arrow_forward_ios,
-                              color: AppColors.primary, size: 16.sp),
-                        )
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.white,
-                      height: 36.h,
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Text("Medical History"),
+                    //     const Spacer(),
+                    //     IconButton(
+                    //       onPressed: () {},
+                    //       icon: Icon(Icons.arrow_forward_ios,
+                    //           color: AppColors.primary, size: 16.sp),
+                    //     )
+                    //   ],
+                    // ),
+                    // Divider(
+                    //   color: Colors.white,
+                    //   height: 36.h,
+                    // ),
                     GestureDetector(
+                      behavior: HitTestBehavior.opaque,
                       onTap: () {
                         di<AuthViewmodel>().logout(context);
                         di<UserInfoViewmodel>().clearUser();
