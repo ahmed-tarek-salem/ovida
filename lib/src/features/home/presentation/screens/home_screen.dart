@@ -53,27 +53,34 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListenableBuilder(
                   listenable: di<HomeViewmodel>(),
                   builder: (context, child) {
-                    return ListView(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppConstants.horizontalPadding,
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        await viewmodel.getDoses();
+                      },
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppConstants.horizontalPadding,
+                        ),
+                        children: [
+                          SizedBox(height: 16.h),
+                          _HomeHeaderContainer(),
+                          SizedBox(height: 24.h),
+                          _UpcomingDoseContainer(
+                            upcomingDose: viewmodel.doses?.nextDose,
+                            onTakeDose: (doseId) => viewmodel.takeDose(doseId),
+                            onSkipDose: (doseId) => viewmodel.skipDose(doseId),
+                            onSnoozeDose: (doseId) =>
+                                viewmodel.snoozeDose(doseId, 10),
+                            viewmodel: viewmodel,
+                          ),
+                          SizedBox(height: 24.h),
+                          _DailyDoses(
+                            viewmodel: viewmodel,
+                            previousDoses: viewmodel.doses?.previousDoses ?? [],
+                          ),
+                          SizedBox(height: 24.h),
+                        ],
                       ),
-                      children: [
-                        SizedBox(height: 16.h),
-                        _HomeHeaderContainer(),
-                        SizedBox(height: 24.h),
-                        _UpcomingDoseContainer(
-                          upcomingDose: viewmodel.doses?.nextDose,
-                          onTakeDose: (doseId) => viewmodel.takeDose(doseId),
-                          onSkipDose: (doseId) => viewmodel.skipDose(doseId),
-                          onSnoozeDose: (doseId) =>
-                              viewmodel.snoozeDose(doseId, 10),
-                        ),
-                        SizedBox(height: 24.h),
-                        _DailyDoses(
-                          previousDoses: viewmodel.doses?.previousDoses ?? [],
-                        ),
-                        SizedBox(height: 24.h),
-                      ],
                     );
                   }),
             ),

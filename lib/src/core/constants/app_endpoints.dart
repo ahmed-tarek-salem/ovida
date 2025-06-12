@@ -9,6 +9,9 @@ class AppEndpoints {
   static const String getMedications = '/medicine/medicines/brand-names';
   static const String getDoses = '/current-medications/doses';
 
-  static String getPharmacy(int pharmacyId) =>
-      '/outdoor/lead/pharmacy/$pharmacyId';
+  static String cancelDose(String id) =>
+      '/current-medications/doses/$id/cancel';
+  static String takeDose(String id) => '/current-medications/doses/$id/take';
+  static String snoozeDose(String id) =>
+      '/current-medications/doses/$id/snooze';
 }

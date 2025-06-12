@@ -5,11 +5,13 @@ class _UpcomingDoseContainer extends StatelessWidget {
   final Function(String id)? onTakeDose;
   final Function(String id)? onSkipDose;
   final Function(String id)? onSnoozeDose;
+  final HomeViewmodel viewmodel;
   const _UpcomingDoseContainer({
     required this.upcomingDose,
     required this.onTakeDose,
     required this.onSkipDose,
     required this.onSnoozeDose,
+    required this.viewmodel,
   });
 
   @override
@@ -53,65 +55,73 @@ class _UpcomingDoseContainer extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Text(
-              upcomingDose?.notificationTime == null
-                  ? "You have no upcoming doses"
-                  : 'Your next dose of ${upcomingDose!.medication?.medicationDetails?.brandName ?? ''} at $formattedTime ',
-              style: Theme.of(context).textTheme.bodySmall),
-          SizedBox(height: 16.h),
-          if (upcomingDose?.notificationTime != null)
-            Row(
-              children: [
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        BorderedButtonWithIcon(
-                          height: 36.h,
-                          width: 74.w,
-                          text: "Take",
-                          iconPath: AppIcons.take,
-                          onPressed: () {
-                            onTakeDose?.call(upcomingDose!.id!);
-                          },
-                        ),
-                        SizedBox(width: 8.w),
-                        BorderedButtonWithIcon(
-                          height: 36.h,
-                          width: 74.w,
-                          text: "Skip",
-                          iconPath: AppIcons.skip,
-                          onPressed: () {
-                            onSkipDose?.call(upcomingDose!.id!);
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8.h),
-                    BorderedButtonWithIcon(
-                      height: 36.h,
-                      width: 154.w,
-                      text: "Snooze for 10 mins",
-                      iconPath: AppIcons.snooze,
-                      onPressed: () {
-                        onSnoozeDose?.call(upcomingDose!.id!);
-                      },
-                    ),
-                  ],
-                ),
-                Spacer(),
-                GradientTimerWidget(
-                  totalMinutes: doseDistance * 60,
-                  remainingMinutes: getElapsedMinutes(
-                      DateTime.now(), upcomingDose!.notificationTime!),
-                  gradientColors: const [
-                    Color(0xFFB8A6FF),
-                    Color(0xFF8B7CFF)
-                  ], // Purple gradient
-                  strokeWidth: 8.0,
-                ),
-              ],
-            ),
+          if (viewmodel.isLoading)
+            Center(
+                child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.h),
+              child: CircularProgressIndicator(),
+            )),
+          if (!viewmodel.isLoading) ...[
+            Text(
+                upcomingDose?.notificationTime == null
+                    ? "You have no upcoming doses"
+                    : 'Your next dose of ${upcomingDose!.medication?.medicationDetails?.brandName ?? ''} at $formattedTime ',
+                style: Theme.of(context).textTheme.bodySmall),
+            SizedBox(height: 16.h),
+            if (upcomingDose?.notificationTime != null)
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          BorderedButtonWithIcon(
+                            height: 36.h,
+                            width: 74.w,
+                            text: "Take",
+                            iconPath: AppIcons.take,
+                            onPressed: () {
+                              onTakeDose?.call(upcomingDose!.id!);
+                            },
+                          ),
+                          SizedBox(width: 8.w),
+                          BorderedButtonWithIcon(
+                            height: 36.h,
+                            width: 74.w,
+                            text: "Skip",
+                            iconPath: AppIcons.skip,
+                            onPressed: () {
+                              onSkipDose?.call(upcomingDose!.id!);
+                            },
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 8.h),
+                      BorderedButtonWithIcon(
+                        height: 36.h,
+                        width: 154.w,
+                        text: "Snooze for 10 mins",
+                        iconPath: AppIcons.snooze,
+                        onPressed: () {
+                          onSnoozeDose?.call(upcomingDose!.id!);
+                        },
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  GradientTimerWidget(
+                    totalMinutes: doseDistance * 60,
+                    remainingMinutes: getElapsedMinutes(
+                        DateTime.now(), upcomingDose!.notificationTime!),
+                    gradientColors: const [
+                      Color(0xFFB8A6FF),
+                      Color(0xFF8B7CFF)
+                    ], // Purple gradient
+                    strokeWidth: 8.0,
+                  ),
+                ],
+              ),
+          ]
         ],
       ),
     );

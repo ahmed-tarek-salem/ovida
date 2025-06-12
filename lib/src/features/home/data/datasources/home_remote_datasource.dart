@@ -5,6 +5,9 @@ import 'package:ovida/src/features/home/data/models/doses_model.dart';
 
 abstract class HomeRemoteDatasource {
   Future<DosesModel> getDoses();
+  Future<void> cancelDose(String id);
+  Future<void> takeDose(String id);
+  Future<void> snoozeDose(String id, DateTime time);
 }
 
 class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
@@ -16,6 +19,34 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
     try {
       final response = await _networkService.get(AppEndpoints.getDoses);
       return DosesModel.fromJson(response.data);
+    } catch (e) {
+      throw ErrorHandler.handleError(e);
+    }
+  }
+
+  @override
+  Future<void> cancelDose(String id) async {
+    try {
+      await _networkService.post(AppEndpoints.cancelDose(id));
+    } catch (e) {
+      throw ErrorHandler.handleError(e);
+    }
+  }
+
+  @override
+  Future<void> takeDose(String id) async {
+    try {
+      await _networkService.post(AppEndpoints.takeDose(id));
+    } catch (e) {
+      throw ErrorHandler.handleError(e);
+    }
+  }
+
+  @override
+  Future<void> snoozeDose(String id, DateTime time) async {
+    try {
+      await _networkService.post(AppEndpoints.snoozeDose(id),
+          data: {'notificationTime': time.toIso8601String()});
     } catch (e) {
       throw ErrorHandler.handleError(e);
     }
