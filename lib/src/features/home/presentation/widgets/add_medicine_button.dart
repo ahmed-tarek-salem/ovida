@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/shared/widgets/gradient_elevated_button.dart';
+import 'package:ovida/src/features/user_info/presentation/screens/user_info_screen.dart';
 
 class AddMedicineButton extends StatelessWidget {
   const AddMedicineButton({
@@ -14,7 +15,11 @@ class AddMedicineButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppConstants.horizontalPadding),
       child: GradientButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const UserInfoScreen();
+          }));
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

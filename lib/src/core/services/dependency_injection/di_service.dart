@@ -7,6 +7,9 @@ import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.da
 import 'package:ovida/src/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:ovida/src/features/home/data/repositories/home_repository.dart';
 import 'package:ovida/src/features/home/presentation/viewmodel/home_viewmodel.dart';
+import 'package:ovida/src/features/notifications/data/datasources/notifications_remote_datasource.dart';
+import 'package:ovida/src/features/notifications/data/repositories/notifications_repository.dart';
+import 'package:ovida/src/features/notifications/presentation/viewmodel/notifications_viewmodel.dart';
 import 'package:ovida/src/features/profile/data/datasources/profile_remote_datasource.dart';
 import 'package:ovida/src/features/profile/data/repositories/profile_repository.dart';
 import 'package:ovida/src/features/profile/presentation/viewmodel/profile_viewmodel.dart';
@@ -49,6 +52,15 @@ class DiService {
     di.registerLazySingleton<HomeRepository>(
         () => HomeRepositoryImpl(datasource: di<HomeRemoteDatasource>()));
     di.registerLazySingleton(() => HomeViewmodel(repo: di<HomeRepository>()));
+
+    di.registerLazySingleton<NotificationsRemoteDatasource>(
+        () => NotificationsRemoteDatasourceImpl(networkService: di()));
+    di.registerLazySingleton<NotificationsRepository>(() =>
+        NotificationsRepositoryImpl(
+            datasource: di<NotificationsRemoteDatasource>()));
+    di.registerLazySingleton(() => NotificationsViewmodel(
+          repo: di<NotificationsRepository>(),
+        ));
 
     di.registerLazySingleton<ProfileRemoteDatasource>(
         () => ProfileRemoteDatasourceImpl(networkService: di()));

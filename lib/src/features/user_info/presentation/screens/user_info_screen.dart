@@ -26,8 +26,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
 
   @override
   void initState() {
-    viewmodel.getData();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewmodel.getData();
+    });
   }
 
   @override

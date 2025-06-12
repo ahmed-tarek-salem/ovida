@@ -8,6 +8,8 @@ class AppEndpoints {
   static const String getDropdownData = '/drop-down-lists';
   static const String getMedications = '/medicine/medicines/brand-names';
   static const String getDoses = '/current-medications/doses';
+  static const String getNotifications = '/notifications';
+  static const String markNotificationAsRead = '/notifications';
 
   static String cancelDose(String id) =>
       '/current-medications/doses/$id/cancel';
