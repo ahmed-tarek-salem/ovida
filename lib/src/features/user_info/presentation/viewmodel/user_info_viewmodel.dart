@@ -155,8 +155,6 @@ class UserInfoViewmodel extends ChangeNotifier {
 
   Map<String, dynamic> buildRequestBody() {
     final formData = formKey.currentState?.value;
-    appLogger.d(userInfo?.currentMedications.first.toString());
-    appLogger.d(di<LocalStorage>().getToken());
     Map<String, dynamic> requestBody = {
       "firstName": formData?["firstName"],
       "dateOfBirth": formData?["dateOfBirth"]?.toIso8601String(),
@@ -173,7 +171,7 @@ class UserInfoViewmodel extends ChangeNotifier {
                 "frequency": medication.frequency,
                 "startDate": medication.startDate?.toIso8601String(),
                 "endDate": medication.endDate?.toIso8601String() ??
-                    DateTime(2050).toIso8601String(),
+                    DateTime.now().add(Duration(days: 30)).toIso8601String(),
                 "prescribingDoctor": medication.prescribingDoctor,
               })
           .toList(),

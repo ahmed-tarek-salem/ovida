@@ -39,8 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    viewmodel.getDoses();
-    userInfo.getData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewmodel.getDoses();
+      userInfo.getData();
+    });
   }
 
   @override

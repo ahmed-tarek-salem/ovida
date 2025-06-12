@@ -21,7 +21,6 @@ class VitalSignsContainer extends StatefulWidget {
 
 class _VitalSignsContainerState extends State<VitalSignsContainer> {
   final viewmodel = di.get<UserInfoViewmodel>();
-  final _formKey = GlobalKey<FormBuilderState>();
 
   int? systolicPressure;
   int? diastolicPressure;
@@ -41,98 +40,95 @@ class _VitalSignsContainerState extends State<VitalSignsContainer> {
               color: AppColors.primary),
         ),
         SizedBox(height: 16.h),
-        FormBuilder(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFieldWithHeader(
-                header: "Blood Pressure".hardCoded,
-                textField: Row(
-                  children: [
-                    Expanded(
-                      child: FormBuilderTextField(
-                        name: "systolic_pressure",
-                        decoration: InputDecoration(
-                          hintText: "120".hardCoded,
-                          border: OutlineInputBorder(),
-                          suffixText: "mmHg",
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          if (value != null) {
-                            systolicPressure = int.tryParse(value);
-                          }
-                        },
+        Column(
+          children: [
+            TextFieldWithHeader(
+              header: "Blood Pressure".hardCoded,
+              textField: Row(
+                children: [
+                  Expanded(
+                    child: FormBuilderTextField(
+                      name: "systolic_pressure",
+                      decoration: InputDecoration(
+                        hintText: "120".hardCoded,
+                        border: OutlineInputBorder(),
+                        suffixText: "mmHg",
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Text("/",
-                        style: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.bold)),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: FormBuilderTextField(
-                        name: "diastolic_pressure",
-                        decoration: InputDecoration(
-                          hintText: "80".hardCoded,
-                          border: OutlineInputBorder(),
-                          suffixText: "mmHg",
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          if (value != null) {
-                            diastolicPressure = int.tryParse(value);
-                          }
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              TextFieldWithHeader(
-                header: "Heart Rate".hardCoded,
-                textField: FormBuilderTextField(
-                  name: "heart_rate",
-                  decoration: InputDecoration(
-                    hintText: "60".hardCoded,
-                    border: OutlineInputBorder(),
-                    suffixText: "bpm",
-                    suffixStyle: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        if (value != null) {
+                          systolicPressure = int.tryParse(value);
+                        }
+                      },
                     ),
                   ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    if (value != null) {
-                      heartRate = int.tryParse(value);
-                    }
-                  },
-                ),
-              ),
-              TextFieldWithHeader(
-                header: "Blood Glucose".hardCoded,
-                textField: FormBuilderTextField(
-                  name: "blood_glucose",
-                  decoration: InputDecoration(
-                    hintText: "100".hardCoded,
-                    border: OutlineInputBorder(),
-                    suffixText: "mg/dL",
-                    suffixStyle: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+                  SizedBox(width: 8.w),
+                  Text("/",
+                      style: TextStyle(
+                          fontSize: 20.sp, fontWeight: FontWeight.bold)),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: FormBuilderTextField(
+                      name: "diastolic_pressure",
+                      decoration: InputDecoration(
+                        hintText: "80".hardCoded,
+                        border: OutlineInputBorder(),
+                        suffixText: "mmHg",
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        if (value != null) {
+                          diastolicPressure = int.tryParse(value);
+                        }
+                      },
                     ),
                   ),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    if (value != null) {
-                      bloodGlucose = int.tryParse(value);
-                    }
-                  },
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+            TextFieldWithHeader(
+              header: "Heart Rate".hardCoded,
+              textField: FormBuilderTextField(
+                name: "heart_rate",
+                decoration: InputDecoration(
+                  hintText: "60".hardCoded,
+                  border: OutlineInputBorder(),
+                  suffixText: "bpm",
+                  suffixStyle: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  if (value != null) {
+                    heartRate = int.tryParse(value);
+                  }
+                },
+              ),
+            ),
+            TextFieldWithHeader(
+              header: "Blood Glucose".hardCoded,
+              textField: FormBuilderTextField(
+                name: "blood_glucose",
+                decoration: InputDecoration(
+                  hintText: "100".hardCoded,
+                  border: OutlineInputBorder(),
+                  suffixText: "mg/dL",
+                  suffixStyle: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primary,
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  if (value != null) {
+                    bloodGlucose = int.tryParse(value);
+                  }
+                },
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 16.h),
         AddButtonWithIcon(

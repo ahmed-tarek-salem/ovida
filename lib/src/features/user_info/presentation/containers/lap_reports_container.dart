@@ -61,7 +61,7 @@ class _LapReportsContainerState extends State<LapReportsContainer> {
               name: "test_date",
               inputType: InputType.date,
               format: DateFormat("dd/MM/yyyy"),
-              initialDate: DateTime(2025),
+              initialDate: DateTime.now(),
               lastDate: DateTime.now(),
               onChanged: (date) {
                 testDate = date;

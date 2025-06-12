@@ -124,8 +124,8 @@ class _CurrentMedicationsContainerState
                     name: "end_date",
                     inputType: InputType.date,
                     format: DateFormat("dd/MM/yyyy"),
-                    initialDate: DateTime(2025),
-                    lastDate: DateTime.now(),
+                    initialDate: DateTime.now(),
+                    lastDate: DateTime.now().add(Duration(days: 30)),
                     onChanged: (date) {
                       startDate = date;
                     },
