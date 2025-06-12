@@ -21,17 +21,17 @@ class BorderedButtonWithIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-          border: GradientBoxBorder(
-            gradient: AppColors.primaryGradient,
-            width: 1.sp,
-          ),
-          borderRadius: BorderRadius.circular(50.sp)),
-      child: GestureDetector(
-        onTap: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+            border: GradientBoxBorder(
+              gradient: AppColors.primaryGradient,
+              width: 1.sp,
+            ),
+            borderRadius: BorderRadius.circular(50.sp)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -27,7 +27,7 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<void> cancelDose(String id) async {
     try {
-      await _networkService.post(AppEndpoints.cancelDose(id));
+      await _networkService.patch(AppEndpoints.cancelDose(id));
     } catch (e) {
       throw ErrorHandler.handleError(e);
     }
@@ -36,7 +36,7 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<void> takeDose(String id) async {
     try {
-      await _networkService.post(AppEndpoints.takeDose(id));
+      await _networkService.patch(AppEndpoints.takeDose(id));
     } catch (e) {
       throw ErrorHandler.handleError(e);
     }
@@ -45,8 +45,12 @@ class HomeRemoteDatasourceImpl implements HomeRemoteDatasource {
   @override
   Future<void> snoozeDose(String id, DateTime time) async {
     try {
-      await _networkService.post(AppEndpoints.snoozeDose(id),
-          data: {'notificationTime': time.toIso8601String()});
+      final utcTime =
+          time.toUtc().toIso8601String(); // "2025-06-09T13:00:00.000Z"
+      await _networkService.patch(
+        AppEndpoints.snoozeDose(id),
+        data: {'notificationTime': utcTime},
+      );
     } catch (e) {
       throw ErrorHandler.handleError(e);
     }

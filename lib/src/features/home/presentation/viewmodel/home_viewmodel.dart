@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/core/services/local_storage/local_storage.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
 import 'package:ovida/src/features/home/data/models/doses_model.dart';
@@ -38,11 +40,10 @@ class HomeViewmodel extends ChangeNotifier {
     try {
       LoadingOverlay.show();
       await _repo.takeDose(doseId);
-      _doses = await _repo.getDoses();
+      LoadingOverlay.showSuccessMessage("Dose taken successfully");
+      getDoses();
     } on AppError catch (e) {
       LoadingOverlay.showErrorMessage("Error taking dose, please try again $e");
-    } finally {
-      LoadingOverlay.hide();
     }
   }
 
@@ -50,26 +51,23 @@ class HomeViewmodel extends ChangeNotifier {
     try {
       LoadingOverlay.show();
       await _repo.cancelDose(doseId);
-      _doses = await _repo.getDoses();
+      LoadingOverlay.showSuccessMessage("Dose skipped successfully");
+      getDoses();
     } on AppError catch (e) {
       LoadingOverlay.showErrorMessage(
           "Error skipping dose, please try again $e");
-    } finally {
-      LoadingOverlay.hide();
     }
   }
 
-  Future<void> snoozeDose(String doseId, int minutes) async {
+  Future<void> snoozeDose(String doseId, DateTime time) async {
     try {
       LoadingOverlay.show();
-      await _repo.snoozeDose(
-          doseId, DateTime.now().add(Duration(minutes: minutes)));
-      _doses = await _repo.getDoses();
+      await _repo.snoozeDose(doseId, time.add(Duration(minutes: 10)));
+      LoadingOverlay.showSuccessMessage("Dose snoozed successfully");
+      getDoses();
     } on AppError catch (e) {
       LoadingOverlay.showErrorMessage(
           "Error snoozing dose, please try again $e");
-    } finally {
-      LoadingOverlay.hide();
     }
   }
 }

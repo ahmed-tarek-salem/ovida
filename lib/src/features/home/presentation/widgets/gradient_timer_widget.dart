@@ -53,7 +53,7 @@ class _GradientTimerWidgetState extends State<GradientTimerWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              widget.remainingMinutes.toString(),
+              (widget.remainingMinutes).toString(),
               style: widget.timeTextStyle,
             ),
             Text(

@@ -69,8 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             upcomingDose: viewmodel.doses?.nextDose,
                             onTakeDose: (doseId) => viewmodel.takeDose(doseId),
                             onSkipDose: (doseId) => viewmodel.skipDose(doseId),
-                            onSnoozeDose: (doseId) =>
-                                viewmodel.snoozeDose(doseId, 10),
+                            onSnoozeDose: (doseId, time) =>
+                                viewmodel.snoozeDose(doseId, time),
                             viewmodel: viewmodel,
                           ),
                           SizedBox(height: 24.h),

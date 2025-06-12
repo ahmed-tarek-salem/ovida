@@ -4,7 +4,7 @@ class _UpcomingDoseContainer extends StatelessWidget {
   final Dose? upcomingDose;
   final Function(String id)? onTakeDose;
   final Function(String id)? onSkipDose;
-  final Function(String id)? onSnoozeDose;
+  final Function(String id, DateTime time)? onSnoozeDose;
   final HomeViewmodel viewmodel;
   const _UpcomingDoseContainer({
     required this.upcomingDose,
@@ -103,7 +103,8 @@ class _UpcomingDoseContainer extends StatelessWidget {
                         text: "Snooze for 10 mins",
                         iconPath: AppIcons.snooze,
                         onPressed: () {
-                          onSnoozeDose?.call(upcomingDose!.id!);
+                          onSnoozeDose?.call(upcomingDose!.id!,
+                              upcomingDose!.notificationTime!);
                         },
                       ),
                     ],
