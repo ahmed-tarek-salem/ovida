@@ -111,14 +111,13 @@ class _UpcomingDoseContainer extends StatelessWidget {
                   ),
                   Spacer(),
                   GradientTimerWidget(
-                    totalMinutes: doseDistance * 60,
+                    totalMinutes: 60,
                     remainingMinutes: getElapsedMinutes(
                         DateTime.now(), upcomingDose!.notificationTime!),
                     gradientColors: const [
                       Color(0xFFB8A6FF),
                       Color(0xFF8B7CFF)
                     ], // Purple gradient
-                    strokeWidth: 8.0,
                   ),
                 ],
               ),

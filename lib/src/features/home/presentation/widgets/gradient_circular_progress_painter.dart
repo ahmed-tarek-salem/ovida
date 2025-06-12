@@ -7,7 +7,7 @@ class GradientCircularProgressPainter extends CustomPainter {
 
   GradientCircularProgressPainter({
     required this.progress,
-    required this.strokeWidth,
+    this.strokeWidth = 8,
     required this.gradientColors,
   });
 
