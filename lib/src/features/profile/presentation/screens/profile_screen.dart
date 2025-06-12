@@ -13,6 +13,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = di<UserInfoViewmodel>().userInfo?.user;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Profile'),
@@ -35,13 +36,13 @@ class ProfileScreen extends StatelessWidget {
                       color: AppColors.sectionsBackground),
                   child: Center(
                       child: Text(
-                    "FE",
+                    user?.firstName?.substring(0, 1) ?? "G",
                     style: TextStyle(fontSize: 72.sp),
                   )),
                 ),
               ),
               SizedBox(height: 24.h),
-              Text("Folan El-Folany",
+              Text(user?.firstName ?? "Guest",
                   style: TextStyle(
                       fontSize: 24.sp,
                       color: AppColors.primary,

@@ -29,7 +29,7 @@ class _HomeHeaderContainerState extends State<_HomeHeaderContainer> {
                     ),
                   ),
                   Text(
-                    userViewmodel.userInfo?.user.firstName ?? '',
+                    userViewmodel.userInfo?.user.firstName ?? 'Guest',
                     style: TextStyle(
                       fontSize: 24.sp,
                       color: AppColors.primary,
@@ -65,7 +65,7 @@ class _HomeHeaderContainerState extends State<_HomeHeaderContainer> {
                   child: Center(
                     child: Text(
                       userViewmodel.userInfo?.user.firstName == null
-                          ? ""
+                          ? "G"
                           : userViewmodel.userInfo!.user.firstName!
                               .substring(0, 1),
                       style: TextStyle(
