@@ -2,12 +2,34 @@ part of 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 
 class _UpcomingDoseContainer extends StatelessWidget {
   final Dose? upcomingDose;
+  final Function(String id)? onTakeDose;
+  final Function(String id)? onSkipDose;
+  final Function(String id)? onSnoozeDose;
   const _UpcomingDoseContainer({
     required this.upcomingDose,
+    required this.onTakeDose,
+    required this.onSkipDose,
+    required this.onSnoozeDose,
   });
 
   @override
   Widget build(BuildContext context) {
+    final formattedTime = DateFormat('hh:mma')
+        .format(upcomingDose?.notificationTime ?? DateTime.now())
+        .toLowerCase();
+    int getElapsedMinutes(DateTime start, DateTime end) {
+      return end.difference(start).inMinutes.abs();
+    }
+
+    final doseDistance =
+        upcomingDose?.medication?.frequency == "foure-times-daily"
+            ? 6
+            : upcomingDose?.medication?.frequency == "three-times-daily"
+                ? 8
+                : upcomingDose?.medication?.frequency == "twice-daily"
+                    ? 12
+                    : 24;
+
     return Container(
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
@@ -34,7 +56,7 @@ class _UpcomingDoseContainer extends StatelessWidget {
           Text(
               upcomingDose?.notificationTime == null
                   ? "You have no upcoming doses"
-                  : 'Your next dose of Hemoclar at ${upcomingDose!.notificationTime!.hour.toString().padLeft(2, '0')}:${upcomingDose!.notificationTime!.minute.toString().padLeft(2, '0')} ',
+                  : 'Your next dose of ${upcomingDose!.medication?.medicationDetails?.brandName ?? ''} at $formattedTime ',
               style: Theme.of(context).textTheme.bodySmall),
           SizedBox(height: 16.h),
           if (upcomingDose?.notificationTime != null)
@@ -49,7 +71,9 @@ class _UpcomingDoseContainer extends StatelessWidget {
                           width: 74.w,
                           text: "Take",
                           iconPath: AppIcons.take,
-                          onPressed: () {},
+                          onPressed: () {
+                            onTakeDose?.call(upcomingDose!.id!);
+                          },
                         ),
                         SizedBox(width: 8.w),
                         BorderedButtonWithIcon(
@@ -57,7 +81,9 @@ class _UpcomingDoseContainer extends StatelessWidget {
                           width: 74.w,
                           text: "Skip",
                           iconPath: AppIcons.skip,
-                          onPressed: () {},
+                          onPressed: () {
+                            onSkipDose?.call(upcomingDose!.id!);
+                          },
                         ),
                       ],
                     ),
@@ -67,13 +93,17 @@ class _UpcomingDoseContainer extends StatelessWidget {
                       width: 154.w,
                       text: "Snooze for 10 mins",
                       iconPath: AppIcons.snooze,
-                      onPressed: () {},
+                      onPressed: () {
+                        onSnoozeDose?.call(upcomingDose!.id!);
+                      },
                     ),
                   ],
                 ),
                 Spacer(),
                 GradientTimerWidget(
-                  totalTimeInMinutes: 15,
+                  totalMinutes: doseDistance * 60,
+                  remainingMinutes: getElapsedMinutes(
+                      DateTime.now(), upcomingDose!.notificationTime!),
                   gradientColors: const [
                     Color(0xFFB8A6FF),
                     Color(0xFF8B7CFF)
@@ -85,138 +115,5 @@ class _UpcomingDoseContainer extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class GradientTimerWidget extends StatefulWidget {
-  final int totalTimeInMinutes;
-  final List<Color> gradientColors;
-  final double strokeWidth;
-  final TextStyle timeTextStyle;
-  final TextStyle labelTextStyle;
-
-  const GradientTimerWidget({
-    Key? key,
-    required this.totalTimeInMinutes,
-    this.gradientColors = const [Color(0xFFB8A6FF), Color(0xFF8B7CFF)],
-    this.strokeWidth = 8.0,
-    this.timeTextStyle = const TextStyle(
-      fontSize: 36,
-      fontWeight: FontWeight.bold,
-      color: Color(0xFF2D3142),
-    ),
-    this.labelTextStyle = const TextStyle(
-      fontSize: 14,
-      color: Color(0xFF2D3142),
-    ),
-  }) : super(key: key);
-
-  @override
-  State<GradientTimerWidget> createState() => _GradientTimerWidgetState();
-}
-
-class _GradientTimerWidgetState extends State<GradientTimerWidget> {
-  double _progress = 0.5;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          width: 120,
-          height: 120,
-          child: CustomPaint(
-            painter: GradientCircularProgressPainter(
-              progress: 0.75,
-              strokeWidth: widget.strokeWidth,
-              gradientColors: widget.gradientColors,
-            ),
-          ),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "15",
-              style: widget.timeTextStyle,
-            ),
-            Text(
-              'mins',
-              style: widget.labelTextStyle,
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class GradientCircularProgressPainter extends CustomPainter {
-  final double progress;
-  final double strokeWidth;
-  final List<Color> gradientColors;
-
-  GradientCircularProgressPainter({
-    required this.progress,
-    required this.strokeWidth,
-    required this.gradientColors,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = (size.width - strokeWidth) / 2;
-
-    // Background circle (optional - light gray background)
-    final backgroundPaint = Paint()
-      ..color = Colors.grey.shade100
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-
-    canvas.drawCircle(center, radius, backgroundPaint);
-
-    // Progress arc with gradient
-    final rect = Rect.fromCircle(center: center, radius: radius);
-    final gradient = SweepGradient(
-      colors: gradientColors,
-      startAngle: 3 * 3.14 / 2, // Start from top (270 degrees)
-      endAngle: 7 * 3.14 / 2, // Full circle (270 + 360 degrees)
-      tileMode: TileMode.repeated,
-    );
-
-    final progressPaint = Paint()
-      ..shader = gradient.createShader(rect)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.round;
-
-    final startAngle = -3.14 / 2; // Start from top (270 degrees in radians)
-    final sweepAngle = 2 * 3.14 * progress; // Full circle is 2*PI radians
-
-    canvas.drawArc(
-      rect,
-      startAngle,
-      sweepAngle,
-      false,
-      progressPaint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant GradientCircularProgressPainter oldDelegate) {
-    return oldDelegate.progress != progress ||
-        oldDelegate.strokeWidth != strokeWidth ||
-        oldDelegate.gradientColors != gradientColors;
   }
 }

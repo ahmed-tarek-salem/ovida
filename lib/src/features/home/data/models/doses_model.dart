@@ -28,7 +28,7 @@ class DosesModel {
 
 class Dose {
   final String? id;
-  final Medication? medication;
+  final MedicationDose? medication;
   final DateTime? notificationTime;
   final bool? sent;
   final bool? canceled;
@@ -52,7 +52,8 @@ class Dose {
       return Dose(
         id: json["_id"]?.toString(),
         medication: json["medication"] != null
-            ? Medication.fromJson(json["medication"] as Map<String, dynamic>)
+            ? MedicationDose.fromJson(
+                json["medication"] as Map<String, dynamic>)
             : null,
         notificationTime: json["notificationTime"] != null
             ? DateTime.tryParse(json["notificationTime"].toString())
@@ -74,7 +75,7 @@ class Dose {
   }
 }
 
-class Medication {
+class MedicationDose {
   final String? id;
   final MedicationDetails? medicationDetails;
   final String? dosage;
@@ -88,7 +89,7 @@ class Medication {
   final DateTime? updatedAt;
   final int? v;
 
-  Medication({
+  MedicationDose({
     this.id,
     this.medicationDetails,
     this.dosage,
@@ -103,9 +104,9 @@ class Medication {
     this.v,
   });
 
-  factory Medication.fromJson(Map<String, dynamic> json) {
+  factory MedicationDose.fromJson(Map<String, dynamic> json) {
     try {
-      return Medication(
+      return MedicationDose(
         id: json["_id"]?.toString(),
         medicationDetails: json["medication"] != null
             ? MedicationDetails.fromJson(
@@ -132,7 +133,7 @@ class Medication {
       );
     } catch (e) {
       print('Error parsing Medication: $e');
-      return Medication();
+      return MedicationDose();
     }
   }
 }

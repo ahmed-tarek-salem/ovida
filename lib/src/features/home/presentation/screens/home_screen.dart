@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
@@ -14,6 +15,7 @@ import 'package:ovida/src/features/home/presentation/viewmodel/home_viewmodel.da
 import 'package:ovida/src/features/home/presentation/widgets/add_medicine_button.dart';
 import 'package:ovida/src/features/home/presentation/widgets/drug_info_dialog.dart';
 import 'package:ovida/src/features/home/presentation/widgets/gradient_bordered_button_with_icon.dart';
+import 'package:ovida/src/features/home/presentation/widgets/gradient_timer_widget.dart';
 import 'package:ovida/src/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:ovida/src/features/profile/presentation/screens/profile_screen.dart';
 import 'package:ovida/src/features/profile/presentation/viewmodel/profile_viewmodel.dart';
@@ -60,14 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         _HomeHeaderContainer(),
                         SizedBox(height: 24.h),
                         _UpcomingDoseContainer(
-                            upcomingDose: viewmodel.doses?.nextDose),
-                        SizedBox(height: 24.h),
-                        _DailyDoses(
-                          previousDoses: viewmodel.doses?.previousDoses ?? [],
+                          upcomingDose: viewmodel.doses?.nextDose,
                           onTakeDose: (doseId) => viewmodel.takeDose(doseId),
                           onSkipDose: (doseId) => viewmodel.skipDose(doseId),
                           onSnoozeDose: (doseId) =>
                               viewmodel.snoozeDose(doseId, 10),
+                        ),
+                        SizedBox(height: 24.h),
+                        _DailyDoses(
+                          previousDoses: viewmodel.doses?.previousDoses ?? [],
                         ),
                         SizedBox(height: 24.h),
                       ],

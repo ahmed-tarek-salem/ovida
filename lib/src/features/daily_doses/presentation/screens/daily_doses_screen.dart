@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ovida/src/core/constants/app_constants.dart';
-import 'package:ovida/src/core/shared/widgets/dose_tile.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
+import 'package:ovida/src/core/constants/app_constants.dart';
 
 class DailyDosesScreen extends StatelessWidget {
   const DailyDosesScreen({super.key});

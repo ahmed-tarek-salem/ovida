@@ -2,15 +2,9 @@ part of 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 
 class _DailyDoses extends StatelessWidget {
   final List<Dose> previousDoses;
-  final Function(String id)? onTakeDose;
-  final Function(String id)? onSkipDose;
-  final Function(String id)? onSnoozeDose;
 
   const _DailyDoses({
     required this.previousDoses,
-    required this.onTakeDose,
-    required this.onSkipDose,
-    required this.onSnoozeDose,
   });
 
   @override
@@ -68,9 +62,11 @@ class _DailyDoses extends StatelessWidget {
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () {
+                  final dose = previousDoses[index];
                   showDialog(
                     context: context,
-                    builder: (context) => DrugInfoDialog(),
+                    builder: (context) =>
+                        DrugInfoDialog(medication: dose.medication),
                   );
                 },
                 child: DoseTile(

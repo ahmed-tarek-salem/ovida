@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:ovida/src/core/constants/app_colors.dart';
 import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
@@ -19,6 +20,7 @@ class DoseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formattedTime = DateFormat('hh:mma').format(time).toLowerCase();
     return Column(
       children: [
         Padding(
@@ -30,14 +32,15 @@ class DoseTile extends StatelessWidget {
                 height: 16.r,
               ),
               SizedBox(width: 18.w),
-              Text(
-                "$medicine - ${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}",
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
+              Expanded(
+                child: Text(
+                  "$medicine - $formattedTime",
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-              const Spacer(),
               Icon(
                 Icons.arrow_forward_ios,
                 size: 16.r,

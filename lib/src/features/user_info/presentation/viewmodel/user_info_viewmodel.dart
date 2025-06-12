@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
+import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
+import 'package:ovida/src/core/services/local_storage/local_storage.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
+import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 import 'package:ovida/src/features/user_info/data/models/dropdown_menus_model.dart';
 import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
@@ -152,6 +155,8 @@ class UserInfoViewmodel extends ChangeNotifier {
 
   Map<String, dynamic> buildRequestBody() {
     final formData = formKey.currentState?.value;
+    appLogger.d(userInfo?.currentMedications.first.toString());
+    appLogger.d(di<LocalStorage>().getToken());
     Map<String, dynamic> requestBody = {
       "firstName": formData?["firstName"],
       "dateOfBirth": formData?["dateOfBirth"]?.toIso8601String(),
@@ -163,8 +168,7 @@ class UserInfoViewmodel extends ChangeNotifier {
       "familyMedicalHistory": formData?["familyMedicalHistory"],
       "currentMedications": userInfo?.currentMedications
           .map((medication) => {
-                "action": "add",
-                "medication": medication.medicationId,
+                "medication": medication.id,
                 "dosage": medication.dosage,
                 "frequency": medication.frequency,
                 "startDate": medication.startDate?.toIso8601String(),
@@ -175,7 +179,6 @@ class UserInfoViewmodel extends ChangeNotifier {
           .toList(),
       "medicalVisits": userInfo?.medicalVisits
           .map((visit) => {
-                "action": "add",
                 "subject": visit.subject,
                 "dateOfVisit": visit.dateOfVisit?.toIso8601String(),
                 "healthcareProvider": visit.healthcareProvider?.toJson(),
@@ -185,7 +188,6 @@ class UserInfoViewmodel extends ChangeNotifier {
           .toList(),
       "laboratoryReports": userInfo?.laboratoryReports
           .map((report) => {
-                "action": "add",
                 "testType": report.testType,
                 "testDate": report.testDate?.toIso8601String(),
                 "resultsSummary": report.resultsSummary,
@@ -193,7 +195,6 @@ class UserInfoViewmodel extends ChangeNotifier {
           .toList(),
       "vitalSigns": userInfo?.vitalSigns
           .map((vs) => {
-                "action": "add",
                 "bloodPressure": vs.bloodPressure?.toJson(),
                 "heartRate": vs.heartRate,
                 "bloodGlucoseLevel": vs.bloodGlucoseLevel,

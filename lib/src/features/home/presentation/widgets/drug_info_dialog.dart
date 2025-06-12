@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ovida/src/features/home/data/models/doses_model.dart';
 
 class DrugInfoDialog extends StatelessWidget {
-  const DrugInfoDialog({super.key});
+  final MedicationDose? medication;
+  const DrugInfoDialog({super.key, required this.medication});
 
   Widget _buildInfoRow(String label, String value) {
     return Row(
@@ -48,7 +50,7 @@ class DrugInfoDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Panadol',
+                        medication?.medicationDetails?.brandName ?? "-",
                         style: TextStyle(
                           fontSize: 24.sp,
                           fontWeight: FontWeight.w700,
@@ -56,7 +58,7 @@ class DrugInfoDialog extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        '(Paracetamol)',
+                        medication?.medicationDetails?.genericName ?? "-",
                         style: TextStyle(
                           fontSize: 16.sp,
                           color: Colors.grey,
@@ -81,11 +83,20 @@ class DrugInfoDialog extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16.h),
-            _buildInfoRow('Drug Class:', 'Analgesic'),
+            _buildInfoRow(
+                'Drug Class:', medication?.medicationDetails?.drugClass ?? "-"),
             SizedBox(height: 8.h),
-            _buildInfoRow('Indications:', 'Headache, Fever'),
+            _buildInfoRow('Dosage:', medication?.dosage ?? "-"),
             SizedBox(height: 8.h),
-            _buildInfoRow('Contraindications:', 'Liver disease'),
+            _buildInfoRow('Frequency:', medication?.frequency ?? "-"),
+            SizedBox(height: 8.h),
+            _buildInfoRow('Indications:',
+                medication?.medicationDetails?.indications?.join(', ') ?? "-"),
+            SizedBox(height: 8.h),
+            _buildInfoRow(
+                'Contraindications:',
+                medication?.medicationDetails?.contraindications?.join(', ') ??
+                    "-"),
           ],
         ),
       ),

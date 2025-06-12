@@ -150,9 +150,13 @@ class _CurrentMedicationsContainerState
         ),
         AddButtonWithIcon(
           onPressed: () {
-            if (selectedMedication != null && startDate != null) {
+            if (selectedMedication != null && startDate != null ||
+                frequency != null) {
+              appLogger.d(
+                  "Adding medication to user info ${selectedMedication?.id}");
               viewmodel.addMedication(CurrentMedication(
                 id: selectedMedication!.id,
+                medicationId: selectedMedication!.id,
                 brandName: selectedMedication!.brandName,
                 dosage: dosage,
                 frequency: frequency,
@@ -162,7 +166,8 @@ class _CurrentMedicationsContainerState
               ));
             } else {
               LoadingOverlay.showErrorMessage(
-                  "Please select a medication and a start date".hardCoded);
+                  "Please select a medication, frequency and a start date"
+                      .hardCoded);
             }
           },
           title: "Add Medication".hardCoded,
@@ -177,7 +182,6 @@ class _CurrentMedicationsContainerState
             listenable: viewmodel,
             builder: (context, child) {
               final medications = viewmodel.userInfo?.currentMedications;
-              appLogger.d(medications?.first.brandName);
               if (medications == null || medications.isEmpty) {
                 return Center(
                   child: Text(

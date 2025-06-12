@@ -117,6 +117,11 @@ class CurrentMedication {
         "endDate": endDate?.toIso8601String(),
         "prescribingDoctor": prescribingDoctor,
       };
+
+  @override
+  String toString() {
+    return 'CurrentMedication(id: $id, medicationId: $medicationId, brandName: $brandName, dosage: $dosage, frequency: $frequency, startDate: $startDate, endDate: $endDate, prescribingDoctor: $prescribingDoctor, user: $user, isActive: $isActive, v: $v)';
+  }
 }
 
 class LaboratoryReport {
