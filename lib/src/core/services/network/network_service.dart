@@ -8,7 +8,7 @@ class NetworkService {
     _init();
   }
   static final baseOptions = BaseOptions(
-    baseUrl: 'http://13.53.102.224:3000/api',
+    baseUrl: 'http://44.223.13.161:3000/api',
     connectTimeout: const Duration(seconds: 30),
     receiveTimeout: const Duration(seconds: 30),
   );
