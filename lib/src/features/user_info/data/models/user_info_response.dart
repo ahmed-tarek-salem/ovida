@@ -60,6 +60,11 @@ class UserInfoResponse {
       vitalSigns: vitalSigns ?? this.vitalSigns,
     );
   }
+
+  @override
+  String toString() {
+    return 'UserInfoResponse(user: $user, currentMedications: $currentMedications, laboratoryReports: $laboratoryReports, medicalVisits: $medicalVisits, vitalSigns: $vitalSigns)';
+  }
 }
 
 class CurrentMedication {
@@ -156,6 +161,11 @@ class LaboratoryReport {
         "testDate": testDate?.toIso8601String(),
         "resultsSummary": resultsSummary,
       };
+
+  @override
+  String toString() {
+    return 'LaboratoryReport(id: $id, testType: $testType, testDate: $testDate, resultsSummary: $resultsSummary, user: $user, v: $v)';
+  }
 }
 
 class MedicalVisit {
@@ -203,6 +213,11 @@ class MedicalVisit {
         "dateOfVisit": dateOfVisit?.toIso8601String(),
         "diagnosis": diagnosis,
       };
+
+  @override
+  String toString() {
+    return 'MedicalVisit(healthcareProvider: $healthcareProvider, treatmentPlan: $treatmentPlan, id: $id, subject: $subject, dateOfVisit: $dateOfVisit, diagnosis: $diagnosis, user: $user, v: $v)';
+  }
 }
 
 class HealthcareProvider {
@@ -224,6 +239,10 @@ class HealthcareProvider {
         "name": name,
         //"specialization": specialization,
       };
+
+  @override
+  String toString() =>
+      'HealthcareProvider(name: $name, specialization: $specialization)';
 }
 
 class TreatmentPlan {
@@ -335,6 +354,11 @@ class User {
             List<dynamic>.from(familyMedicalHistory.map((x) => x)),
         "__v": v,
       };
+
+  @override
+  String toString() {
+    return 'User(address: $address, emergencyContact: $emergencyContact, id: $id, phoneNumber: $phoneNumber, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, alternativeContact: $alternativeContact, chronicDiseases: $chronicDiseases, allergies: $allergies, previousSurgeries: $previousSurgeries, familyMedicalHistory: $familyMedicalHistory, v: $v)';
+  }
 }
 
 class VitalSign {

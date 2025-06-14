@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ovida/src/core/extensions/hardcoded.dart';
-import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
-import 'package:ovida/src/core/services/local_storage/local_storage.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
 import 'package:ovida/src/core/utilities/app_logger.dart';
-import 'package:ovida/src/features/auth/presentation/viewmodel/auth_viewmodel.dart';
 import 'package:ovida/src/features/home/presentation/screens/home_screen.dart';
 import 'package:ovida/src/features/user_info/data/models/dropdown_menus_model.dart';
 import 'package:ovida/src/features/user_info/data/models/medication_model.dart';
@@ -61,17 +58,15 @@ class UserInfoViewmodel extends ChangeNotifier {
 
   Future<void> getData() async {
     try {
-      if (userInfo == null || dropdownMenus == null || medications == null) {
-        isLoading = true;
-        error = null;
-        await Future.wait([
-          getUserInfo(),
-          getDropdownMenus(),
-          getMedications(),
-        ]);
-      }
-      appLogger.d("User info: $userInfo");
+      isLoading = true;
+      error = null;
+      await Future.wait([
+        if (dropdownMenus == null) getDropdownMenus(),
+        if (medications == null) getMedications(),
+        getUserInfo(),
+      ]);
     } on AppError catch (e) {
+      appLogger.e(e);
       error = e;
     } finally {
       isLoading = false;

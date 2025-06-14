@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +7,6 @@ import 'package:ovida/src/core/constants/app_constants.dart';
 import 'package:ovida/src/core/constants/app_icons.dart';
 import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
 import 'package:ovida/src/core/shared/widgets/dose_tile.dart';
-import 'package:ovida/src/features/daily_doses/presentation/screens/daily_doses_screen.dart';
 import 'package:ovida/src/features/home/data/models/doses_model.dart';
 import 'package:ovida/src/features/home/presentation/viewmodel/home_viewmodel.dart';
 import 'package:ovida/src/features/home/presentation/widgets/add_medicine_button.dart';
@@ -18,7 +15,6 @@ import 'package:ovida/src/features/home/presentation/widgets/gradient_bordered_b
 import 'package:ovida/src/features/home/presentation/widgets/gradient_timer_widget.dart';
 import 'package:ovida/src/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:ovida/src/features/profile/presentation/screens/profile_screen.dart';
-import 'package:ovida/src/features/profile/presentation/viewmodel/profile_viewmodel.dart';
 import 'package:ovida/src/features/user_info/presentation/viewmodel/user_info_viewmodel.dart';
 
 part '../containers/daily_doses_container.dart';
@@ -57,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, child) {
                     return RefreshIndicator(
                       onRefresh: () async {
-                        await viewmodel.getDoses();
+                        await Future.wait([
+                          viewmodel.getDoses(),
+                          userInfo.getData(),
+                        ]);
                       },
                       child: ListView(
                         padding: EdgeInsets.symmetric(

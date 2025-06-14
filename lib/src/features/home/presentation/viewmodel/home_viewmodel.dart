@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:ovida/src/core/services/dependency_injection/di_service.dart';
-import 'package:ovida/src/core/services/local_storage/local_storage.dart';
 import 'package:ovida/src/core/shared/models/app_error_model.dart';
 import 'package:ovida/src/core/shared/widgets/loading_overlay.dart';
+import 'package:ovida/src/core/utilities/app_logger.dart';
 import 'package:ovida/src/features/home/data/models/doses_model.dart';
 import 'package:ovida/src/features/home/data/repositories/home_repository.dart';
 
@@ -29,6 +28,7 @@ class HomeViewmodel extends ChangeNotifier {
 
       _doses = await _repo.getDoses();
     } on AppError catch (e) {
+      appLogger.e(e);
       _error = e;
     } finally {
       _isLoading = false;
